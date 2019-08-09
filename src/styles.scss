@@ -1,0 +1,220 @@
+// Material Theme
+// @import '~ng-snotify/styles/material';
+
+@import '~@angular/material/theming';
+
+$blue_palette: (
+    50 : #e8f2fb,
+    100 : #c6ddf5,
+    200 : #a0c7ef,
+    300 : #7ab1e8,
+    400 : #5ea0e3,
+    500 : #418fde,
+    600 : #3b87da,
+    700 : #327cd5,
+    800 : #2a72d1,
+    900 : #1c60c8,
+    A100 : #fefeff,
+    A200 : #cbdeff,
+    A400 : #98bdff,
+    A700 : #7fadff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+@include mat-core();
+
+// Default light theme
+// $primary-palette: mat-palette($mat-indigo);
+// $accent-palette: mat-palette($mat-pink, A200, A100, A400);
+// $my-app-theme: mat-light-theme($primary-palette, $accent-palette);
+
+$primary-palette: mat-palette($blue_palette);
+$accent-palette: mat-palette($mat-pink, A200, A100, A400);
+$my-app-theme: mat-light-theme($primary-palette, $accent-palette);
+
+// add custom theme to angular material
+@include angular-material-theme($my-app-theme);
+
+/* for sidenav to take whole page */
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial,Helvetica Neue,Helvetica,sans-serif; 
+}
+
+.font-1 {
+  font-family: Arial,Helvetica Neue,Helvetica,sans-serif; 
+}
+
+// HR text
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+  &:before {
+    content: '';
+    // use the linear-gradient for the fading effect
+    // use a solid background color for a solid bar
+    background: linear-gradient(to right, transparent, rgb(117, 117, 117), transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+
+    padding: 0 .5em;
+    line-height: 1.5em;
+    // this is really the only tricky part, you need to specify the background color of the container element...
+    color: rgb(48, 44, 44);
+    background-color: #fcfcfa;
+  }
+}
+
+.center-container {
+  position: relative;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.absolute-center.responsive {
+  width: 50%;
+  height: 60%;
+  min-width: 400px;
+  max-width: 600px;
+  padding: 40px;
+}
+
+input.form-control {
+  margin-bottom: 2.5rem !important;
+}
+
+input.form-contol:-webkit-autofill,
+input.form-control:-webkit-autofil:hover,
+input.form-control:-webkit-autofil:focus,
+input.form-control:-webkit-autofil:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.tc-custom { color: #757575; }
+.fs { font-size: 0.6rem; }
+.fs-sm { font-size: 0.8rem; }
+.fs-md { font-size: 1rem; }
+.fs-lg { font-size: 1.2rem; }
+
+.card.card-cascade .view.gradient-card-header {
+  padding: 1rem 1rem;
+  text-align: center;
+}
+
+.card.card-cascade h3,
+.card.card-cascade h4
+{
+  margin-bottom: 0px;
+}
+
+.blue-gradient {
+  background: -webkit-linear-gradient(50deg, #45cafc, #303f9f);
+  background: linear-gradient(40deg, #45cafc, #4285f4);
+}
+
+.image-wrapper {
+  overflow: hidden;
+  padding-bottom: 90%;
+  position: relative;
+  width: 100%;
+}
+
+.image-wrapper img {
+  max-height: 100%;
+  position: absolute;
+  top: 50%; left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn-round-lg { border-radius: 22.5px !important; }
+.btn-round-sm { border-radius: 25px !important; }
+.btn-round-xs {
+  border-radius: 22.5px !important;
+  -webkit-border-radius: 22.5px;
+  -moz-border-radius: 22.5px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.progress-bar, .progress { height: 0.35rem !important; }
+.block-options { display: inline-flex; }
+.bg-google-plus { background-color: #DD4B39; }
+table { width: 100%; }
+
+// row over bg-color
+tr:hover td { background: #f5f5f5; }
+
+.content-container {
+  position: relative;
+  height: 100vh;
+}
+
+// spinner loader
+.loader {
+  border: 12px solid #e8eaf6;
+  border-top: 12px solid #4285F4;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+// loading shadow
+.loading-shade {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+font-weight-bold { font-weight: bolder; }
+
+.small-font { font-family: Roboto,sans-serif; }
+
+.toast-top-right {
+  top: 70px !important;
+}

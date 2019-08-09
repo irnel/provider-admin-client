@@ -1,0 +1,20 @@
+i {
+  cursor: pointer;
+}
+
+favorite-color {
+  color: #ff4444;
+}
+
+.row {
+  position: relative;
+}
+
+.loading-shade {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

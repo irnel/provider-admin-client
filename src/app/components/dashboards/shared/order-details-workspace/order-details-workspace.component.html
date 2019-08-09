@@ -1,0 +1,233 @@
+<!-- Category Details -->
+<div *ngIf="observer$ | async; else progress" class="w-responsive h-responsive mt-3 mb-3 center ml-auto mr-auto">
+  <mdb-card>
+    <h6 class="h6-responsive pt-3 text-center">
+      <!-- Provider -->
+      <div *ngIf="isProvider">
+        <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <a routerLink="/provider-dashboard/workspace/home">Home</a>
+        <span>/</span>
+        <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+        <span>/</span>
+        <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{order.providerName}}</a>
+        <span>/</span>
+        <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/orders">Orders</a>
+        <span>/</span>
+        <span>Details</span>
+      </div>
+
+      <!-- Admin -->
+      <div *ngIf="isAdmin">
+        <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <a routerLink="/admin-dashboard/workspace/home">Home</a>
+        <span>/</span>
+        <a routerLink="/admin-dashboard/workspace/users">Users</a>
+        <span>/</span>
+        <a>{{user.displayName}}</a>
+        <span>/</span>
+        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
+        <span>/</span>
+        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{order.providerName}}</a>
+        <span>/</span>
+        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/orders">Orders</a>
+        <span>/</span>
+        <span>Details</span>
+      </div>
+
+      <!-- Cashier -->
+      <div *ngIf="isCashier">
+        <i (click)="redirectToCashierHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <a routerLink="/cashier-dashboard/workspace/home">Home</a>
+        <span>/</span>
+        <span>Order</span>
+        <span>/</span>
+        <span>Details</span>
+      </div>
+    </h6>
+
+    <hr>
+
+    <mdb-card-body> 
+      <!-- Name -->
+      <h3 class="h3-responsive font-weight-bold text-center">
+        <strong>{{order.displayName}}</strong>
+      </h3>
+      <!-- Pickup Time -->
+      <h5 class="h5-responsive text-center mt-1">
+        <span class="badge success-color" mdbTooltip="Order pickup time" placement="bottom">
+          <i class="fa fa-clock-o prefix mr-2" aria-hidden="true"></i>
+          <strong>{{order.pickupTime}}</strong>
+        </span>
+      </h5>
+                      
+      <div class="row mt-2 mb-5">
+        <!-- Order Id -->
+        <div class="col">
+          <i class="fa fa-id-card-o prefix mr-2" aria-hidden="true"
+            mdbTooltip="Order id" placement="top"></i>
+          {{order.id}}
+          <!-- CreatedDate -->
+          <h6 class="h6-responsive dark-grey-text">
+            <i class="fa fa-calendar-o prefix mr-2" aria-hidden="true"
+              mdbTooltip="Order created date" placement="top"></i>
+            {{order.createdDate.toMillis() | date: 'dd/MM/yyyy h:mm:ss a z' }}
+          </h6>
+          <!-- Paid -->
+          <h6 class="h6-responsive dark-grey-text">
+            <i class="fa fa-credit-card prefix mr-2 mt-1" aria-hidden="true"
+              mdbTooltip="Order paid" placement="top"></i>
+            <span class="badge badge-pill ml-1 mr-4"
+                [ngStyle]="{'background-color': order.paid ? '#00C851' : '#ff4444' }">
+
+              {{valueToString(order.paid) | uppercase}}
+            </span>
+          </h6>
+        </div> 
+        
+        <div class="col">
+          <!-- Total Price -->
+          <h1 class="h1-responsive text-primary text-center font-weight-bold">${{total}}</h1>
+          <!-- User Provider -->
+          <h6 *ngIf="userRole === 'provider' || userRole === 'admin'"  class="h6-responsive text-center mt-2">
+            <span class="badge badge-pill ml-1 mr-4"
+                mdbTooltip="Order status"
+                placement="bottom"
+                [ngStyle]="{'background-color': getStatusColor(order.status)}">
+                
+              {{order.status | uppercase}}
+            </span>
+          </h6>
+          <!-- User Cashier -->
+          <div *ngIf="userRole === 'cashier'" class="d-flex justify-content-center">
+            <!-- Previous Status -->
+            <div *ngIf="order.status !== 'pending'" class="mt-2 mr-2">
+              <i class="fa fa-undo fa-lg prefix" aria-hidden="true"
+                mdbTooltip="Previous status" placement="top"
+                (click)="previousStatus(order.status)"></i>
+            </div>
+
+            <div class="btn-group" mdbDropdown>
+              <button mdbDropdownToggle mdbBtn size="sm" class="dropdown-toggle waves-light"
+                  [ngStyle]="{'background-color': getStatusColor(order.status)}"    
+                  type="button" mdbWavesEffect>
+  
+                {{order.status | uppercase}}
+              </button>
+              <div *ngIf="order.status === 'pending' || order.status === 'ready'" class="dropdown-menu">
+                <a *ngIf="order.status === 'pending'" class="dropdown-item"
+                   (click)="updateOrderStatus('ready')">
+
+                  Ready
+                </a>
+                <a *ngIf="order.status === 'ready'" class="dropdown-item"
+                    (click)="updateOrderStatus('completed')">
+
+                  Completed
+                </a>
+                <a *ngIf="order.status === 'ready'" class="dropdown-item"
+                    (click)="updateOrderStatus('canceled')">
+
+                  Canceled
+                </a>
+              </div>
+            </div>
+          </div>
+               
+        </div>
+      </div>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header (opened)="panelOpenState = true"
+                                      (closed)="panelOpenState = false">
+            <mat-panel-title><strong>Product list</strong></mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!--Grid column-->
+          <div class="col-md-12 my-1 text-left">
+            <div class="card">
+              <div class="card-body">
+                <!-- Shopping Cart table -->
+                <div class="table-responsive">
+                  <table class="table product-table">
+                    <!-- Table head -->
+                    <thead class="mdb-color lighten-5">
+                      <tr>
+                        <th></th>
+                        <th class="font-weight-bold">
+                          <strong>Product</strong>
+                        </th>
+                        <th></th>
+                        <th class="font-weight-bold">
+                          <strong>Price</strong>
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <!-- /.Table head -->
+
+                    <!-- Table body -->
+                    <tbody>
+
+                      <!-- Rows -->
+                      <tr *ngFor="let product of order.products">
+                        <th scope="row">
+                          <img src="{{product.url}}" alt="Product" 
+                            class="card-img-top img-fluid z-depth-0 rounded">
+                        </th>
+                        <td style="width: 35%">
+                          <h6 class="h6-responsive">
+                            <strong>{{product.name}}</strong>
+                          </h6>
+                          <p class="text-muted">{{product.categoryName}}</p>
+                        </td>
+                        <td></td>
+                        <td class="font-weight-bold align-middle text-primary" style="width: 15%">
+                          <h6 class="h6-responsive">
+                            <strong>${{product.price}}</strong>
+                          </h6>
+                        </td>
+                        <td></td>
+                      </tr>
+                      <!-- /.Rows -->                    
+
+                    </tbody>
+                    <!-- /.Table body -->
+                  </table>
+
+                </div>
+                <!-- /.Shopping Cart table -->
+              </div>
+            </div>
+          </div>
+          <!--Grid column-->
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title><strong>Comments</strong></mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!-- Comments -->
+          <p *ngIf="order.remarks.length === 0" class="card-text small-font font-italic text-center">
+            No comments
+          </p>
+          <p *ngIf="order.remarks.length > 0" class="card-text small-font font-italic">
+            {{order.remarks}}
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mdb-card-body>
+
+  </mdb-card>
+  <!-- Heading -->
+
+  <!-- Floating Action Button -->
+  <a type="button" mat-fab class="pink mat-elevation-z8">00:00</a>
+  
+</div>
+
+<ng-template #progress>
+  <app-circle-progress [state]="state"></app-circle-progress>
+</ng-template>

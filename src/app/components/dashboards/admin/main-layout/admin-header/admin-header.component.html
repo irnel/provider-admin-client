@@ -1,0 +1,54 @@
+<!-- Navbar -->
+<mdb-navbar SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg
+    scrolling-navbar double-nav navbar-dark bg-primary" [containerInside]="false">
+
+  <!-- SideNav slide-out button -->
+  <navlinks class="navbar-container">
+
+    <div class="white-text">
+      <a (click)="onToggleSideNav()" class="button-collapse waves-effect" mdbWavesEffect>
+        <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+
+  </navlinks>
+  <!--SideNav slide-out button -->
+
+  <navlinks>
+    <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
+      <!-- <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          <span class="clearfix d-none d-sm-inline-block">Contact</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>
+          <i class="fa fa-comments-o" aria-hidden="true"></i>
+          <span class="clearfix d-none d-sm-inline-block">Support</span>
+        </a>
+      </li> -->
+
+      <!-- My Account -->
+      <li class="nav-item dropdown btn-group" dropdown>
+          <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <i class="fas fa-user mr-1" aria-hidden="true"></i>{{currentUser.email}}
+          </a>
+  
+          <div class="dropdown-menu dropdown-primary dropdown-menu-right" role="menu">
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-user-cog text-primary fa-fw mr-2" aria-hidden="true"></i>Settings
+            </a>
+  
+            <a class="dropdown-item" (click)="SignOut()">
+              <i class="fas fa-sign-out-alt text-primary fa-fw mr-2" aria-hidden="true"></i>Log out
+            </a>
+          </div>
+        </li>
+    </ul>
+
+  </navlinks>
+
+</mdb-navbar>
+<!-- Navbar -->

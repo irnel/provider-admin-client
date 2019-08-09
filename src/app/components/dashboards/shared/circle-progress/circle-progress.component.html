@@ -1,0 +1,13 @@
+<!-- progress bar circle -->
+<div class="content-container">
+  <div *ngIf="state === 'waiting'" class="progress-container">
+    <div class="loader"></div>
+    <h5 class="text-center mt-3">Loading data</h5>
+  </div>
+  
+  <!-- add image to error -->
+  <div *ngIf="state === 'failed'" class="progress-container">
+    <i class="fa fa-exclamation-triangle fa-5x mr-5" style="color: #ff4444"></i>
+    <h5 class="position-center mt-3">Failed to load data</h5>
+  </div>
+</div>

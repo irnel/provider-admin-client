@@ -1,0 +1,158 @@
+<!-- Edit Provider -->
+<mdb-card *ngIf="observer$ | async; else progress" id="header" class="w-responsive mt-3 mb-3 center ml-auto mr-auto">
+  <!-- Card Header -->
+  <mdb-card-header class="px-lg-5">
+    <h3 class="mt-1">
+      <span class="badge badge-primary waves-light">{{title}}</span>
+    </h3>
+
+    <h6 class="pt-1 font-1">
+      <i (click)="redirectToHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/home">Home</a>
+      <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+      <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <span class="text-capitalize">{{mode}}</span>
+    </h6>
+  </mdb-card-header>
+
+  <!--Card content-->
+  <mdb-card-body class="px-lg-5">
+    <form [formGroup]="editForm">
+      <!-- Name -->
+      <div class="md-form form-sm mt-2">
+        <input mdbInputDirective type="text" class="form-control"
+            id="formName" formControlName="name"
+            [errorMessage]="nameError"
+            [validateSuccess]="false">
+
+        <label for="formName">Name</label>
+      </div>
+
+      <!-- Google maps (Location) -->
+      <div class="md-form form-sm mt-3">
+        <input #search mdbInputDirective type="text" class="form-control"
+            id="formAddress" formControlName="address"
+            [errorMessage]="addressError"
+            [validateSuccess]="false"
+            placeholder="Introduce your address">
+
+        <agm-map #map
+            [zoom]="zoom"
+            [latitude]="address.lat"
+            [longitude]="address.lng"
+            [scrollwheel]="false">
+
+          <agm-marker [latitude]="address.lat" [longitude]="address.lng"></agm-marker>
+
+          <agm-info-window #infoWindow>
+            <div>
+              {{address.lat}}
+              {{address.lng}}
+            </div>
+          </agm-info-window>
+
+        </agm-map>
+      </div>
+
+      <!-- Available Hours -->
+      <div class="mt-5">
+        <h5 class="h5-responsive">
+          <strong>Available Hours</strong>
+        </h5>
+
+        <table class="table table-responsive-sm table-sm table-hover">
+          <thead class="mdb-color lighten-5">
+            <tr>
+              <th class="font-weight-bold">Day of Week</th>
+              <th class="font-weight-bold">Opening Time</th>
+              <th class="font-weight-bold">Closing Time</th>
+            </tr>
+          </thead>
+
+          <tbody>
+                        
+          </tbody>
+        </table>
+
+        <h6 class="h6-responsive">
+          <p class="font-italic tc-custom">No schedule has been selected</p>
+        </h6>
+
+        <button mdbBtn outline="true" color="primary"aria-label="Close" mdbWavesEffect>
+          <i class="far fa-calendar-alt left mr-2" aria-hidden="true"></i>Select
+        </button>
+        
+      </div>
+
+      <!-- Phone -->
+      <div class="md-form form-sm mt-5">
+          <input mdbInputDirective type="text" class="form-control"
+              id="formPhoneNumber" formControlName="phone"
+              [validateSuccess]="false">
+  
+          <label for="formPhoneNumber">Phone number</label>
+        </div>
+
+      <!-- Description -->
+      <div class="md-form form-sm mt-5">
+        <textarea class="md-textarea md-textarea-auto form-control"
+            id="formDescription" formControlName="description"
+            type="text" [validateSuccess]="false"
+            data-error="character not allowed" mdbInputDirective></textarea>
+
+        <label for="formDescription">Description</label>
+      </div>
+
+      <!-- Gallery component -->
+      <app-gallery 
+        (files)="onSelectedFiles($event)"
+        [serverFiles$]="serverFiles$"
+        [model]="provider"
+        [progress$]="allPercentage"
+        [uploading]="loading"
+        [mode]="mode">
+      </app-gallery>
+
+    </form>
+
+  </mdb-card-body>
+
+  <mdb-card-footer>
+    <div class="pl-4">
+      <button mdbBtn
+          [disabled]="loading"
+          color="primary"
+          class="relative waves-light" mdbWavesEffect
+          (click)="editProvider()">
+
+        <!-- Create Mode -->
+        <div *ngIf="!edit" >
+          <i *ngIf="!loading" class="fas fa-plus left mr-2" aria-hidden="true"></i>Create
+          <i *ngIf="loading" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="edit">
+          <i *ngIf="!loading" class="fas fa-save left mr-2" aria-hidden="true"></i>Save
+          <i *ngIf="loading" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+        </div>
+      </button>
+
+      <!-- Button Cancel -->
+      <button mdbBtn
+          outline="true" color="primary"
+          aria-label="Close" mdbWavesEffect
+          (click)="cancel()">
+
+        <i class="fas fa-ban left mr-2" aria-hidden="true"></i>Cancel
+      </button>
+    </div>
+
+  </mdb-card-footer>
+
+</mdb-card>
+
+<ng-template #progress>
+  <app-circle-progress [state]="state"></app-circle-progress>
+</ng-template>

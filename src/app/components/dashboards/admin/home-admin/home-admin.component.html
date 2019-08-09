@@ -1,0 +1,46 @@
+<!-- Main Layout -->
+<app-layout>
+
+  <app-admin-header (sidenavToggle)="drawer.toggle()"></app-admin-header>
+
+  <mat-sidenav-container>
+    <!-- Sidebar Material -->
+    <mat-sidenav #drawer class="sidenav special-color-dark" fixedInViewport="true"
+        [attr.role]="isHandSet$ ? 'dialog' : 'navigation'"
+        [mode]="(isHandSet$ | async)!.matches ? 'over' : 'side'"
+        [opened]="!(isHandSet$ | async)!.matches">
+
+      <div class="list-group list-group-flush mt-4">
+        <!-- Options Home -->
+        <a routerLink="home" class="list-group-item list-group-item-action special-color-dark waves-effect">
+          <i class="fas fa-home mr-2" aria-hidden="true"></i>Home
+        </a>
+
+        <!-- Options Users -->
+        <a routerLink="users" class="list-group-item list-group-item-action special-color-dark waves-effect">
+          <i class="fas fa-users mr-2" aria-hidden="true"></i>Users
+        </a>
+
+      </div>
+
+    </mat-sidenav>
+    <!-- Sidebar Material -->
+
+    <!-- Main Content -->
+    <mat-sidenav-content>
+
+      <!-- Workspace Content -->
+      <main class="mx-lg-5 mt-5">
+        <router-outlet></router-outlet>
+      </main>
+
+      <!-- Footer -->
+      <!-- <app-footer></app-footer> -->
+
+    </mat-sidenav-content>
+    <!-- Main Content -->
+
+  </mat-sidenav-container>
+
+<!-- Main Layout -->
+</app-layout>

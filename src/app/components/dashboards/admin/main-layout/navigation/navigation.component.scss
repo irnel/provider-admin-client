@@ -1,0 +1,10 @@
+.sidenav-container {
+  height: 10%;
+}
+
+.sidenav {
+  width: 260px;
+  position: fixed;
+  top: 8% !important;   // TODO: improve calc (navbar container width)
+}
+

@@ -1,0 +1,117 @@
+<!-- Product Details -->
+<section>
+  <div *ngIf="observer$ | async; else progress" class="w-responsive h-responsive mt-3 mb-3 center ml-auto mr-auto">
+    <!-- Breadcrumbs -->
+    <mdb-card>
+      <h6 class="h6-responsive pt-3 pl-3">
+        <!-- Provider -->
+        <div *ngIf="!isAdmin">
+          <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+          <a routerLink="/provider-dashboard/workspace/home">Home</a>
+          <span>/</span>
+          <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+          <span>/</span>
+          <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{product.providerName}}</a>
+          <span>/</span>
+          <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories">Categories</a>
+          <span>/</span>
+          <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories/{{categoryId}}/details">{{product.categoryName}}</a>
+          <span>/</span>
+          <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories/{{categoryId}}/products">Products</a>
+          <span>/</span>
+          <span>Details</span>
+        </div>
+  
+        <!-- Admin -->
+        <div *ngIf="isAdmin">
+          <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+          <a routerLink="/admin-dashboard/workspace/home">Home</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users">Users</a>
+          <span>/</span>
+          <a>{{user.displayName}}</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{product.providerName}}</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/categories">Categories</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/categories/{{categoryId}}/details">{{product.categoryName}}</a>
+          <span>/</span>
+          <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/categories/{{categoryId}}/products">Products</a>
+          <span>/</span>
+          <span>Details</span>
+        </div>
+      </h6>
+
+      <hr>
+
+      <mdb-card-body>
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="view">
+              <img src="{{product.url}}" class="d-block w-100 rounded animated fadeInLeft" alt="provider image">              
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <h4 class="h4-responsive font-weight-bold">
+              <strong>{{product.name}}</strong>
+            </h4>
+            
+            <h3 class="h3-responsive font-weight-bold text-primary">
+              ${{product.price}}
+            </h3>
+  
+            <p  class="card-text small-font" *ngIf="product.description.length > 0">
+              {{product.description}}
+            </p>
+          </div>
+        </div>
+
+      </mdb-card-body>
+    </mdb-card>
+  
+    <!-- <mdb-card>
+      <div class="view">
+        <img class="card-img-top" src="{{product.url}}" alt="provider image">
+        <div class="mask text-white text-center rgba-black-light py-4 px-3"> -->
+          <!-- Name -->
+          <!-- <h3 class="card-title h3-responsive pt-2"><strong>{{product.name}}</strong></h3> -->
+          <!-- Price -->
+          <!-- <h2 class="mt-1 h1-responsive"><strong>${{product.price}}</strong></h2> -->
+          <!-- Description -->
+          <!-- <p *ngIf="product.description.length > 0">{{product.description}}</p>
+          <div class="block-options mt-3"> -->
+            <!-- Provider -->
+            <!-- <a *ngIf="!isAdmin" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">
+              <h5><span class="badge badge-pill indigo mr-2">{{product.providerName}}</span></h5>
+            </a>
+            <a *ngIf="isAdmin" routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">
+              <h5><span class="badge badge-pill indigo mr-2">{{product.providerName}}</span></h5>
+            </a> -->
+    
+            <!-- Category -->
+            <!-- <a *ngIf="!isAdmin" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories/{{categoryId}}/details">
+              <h5><span class="badge badge-pill purple darken-2">{{product.categoryName}}</span></h5>
+            </a>
+            <a *ngIf="isAdmin" routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/categories/{{categoryId}}/details">
+              <h5><span class="badge badge-pill purple darken-2">{{product.categoryName}}</span></h5>
+            </a>
+          </div>
+  
+        </div>
+  
+      </div>
+  
+    </mdb-card> -->
+    
+  </div>
+  
+  <ng-template #progress>
+    <app-circle-progress [state]="state" ></app-circle-progress>
+  </ng-template>
+
+</section>
+

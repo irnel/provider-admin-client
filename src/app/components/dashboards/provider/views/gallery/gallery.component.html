@@ -1,0 +1,89 @@
+
+<!-- Grid row -->
+<div *ngIf="serverFiles$ | async" class="row mb-2">
+  <div class="loading-shade w-100 h-100" *ngIf="clicked">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Grid column -->
+  <div *ngFor="let image of selectedFiles"  class="col-lg-4 mt-3 mb-3">
+    <!-- Card -->
+    <mdb-card>
+      <!-- Image -->
+      <img *ngIf="image.file" class="img-fluid card-img-top z-depth-1" src="{{image.src}}" alt="image">
+      <img *ngIf="!image.file" class="img-fluid card-img-top z-depth-1" src="{{image.url}}" alt="image">
+      <!-- Footer -->
+      <mdb-card-footer *ngIf="!uploading" class="text-center">
+        <!-- principal -->
+        <i class="fa fa-star px-2" aria-hidden="true"
+          mdbTooltip="Mark as principal"
+          placement="top"
+          (click)="markAsPrincipal(image)"
+          [style.color]="image.markAsPrincipal ? '#ff4444': '#37474F'">
+        </i>
+        <!-- remove -->
+        <i class="fa fa-trash" aria-hidden="true"
+          mdbTooltip="Remove"
+          placement="top"
+          style="color: #37474F"
+          (click)="removeImage(image)">
+        </i>
+        
+      </mdb-card-footer>
+
+    </mdb-card>
+
+  </div>
+
+</div>
+
+<!-- Alert message -->
+<div #alert *ngIf="showError && !uploading"
+  class="alert alert-danger"
+  alert-dismissible fade show role="alert"
+  (click)="closeAlert()">
+
+  <a type="button" class="close" aria-label="Close" mdbWavesEffect>
+  <i class="fa fa-times"></i>
+  </a>
+
+  <p *ngIf="extensionError">
+    Invalid extension for file <strong>{{fileName}}</strong>.
+    Only <strong>"jpg, jpeg, gif, png"</strong> files are supported.
+  </p>
+
+  <p *ngIf="sizeError">
+    Invalid size for file <strong>{{fileName}}</strong>.
+    Only <strong>"2048 KB"</strong> per file are supported.
+  </p>
+
+</div>
+
+<!-- Input control -->
+<input #fileInput type="file" accept="image/*" multiple style="display: none;"
+    (change)="onSelectFile($event)">
+
+<div *ngIf="progress$" class="text-center mt-2">
+  <small>Uploading images: {{progress$ | async}}%</small>
+</div>
+<div *ngIf="progress$" class="progress">
+  <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+      role="progressbar"
+      [style.width]="((progress$ | async) + '%')"
+      aria-valuenow="{{progress$ | async}}"
+      aria-valuemin="0"
+      aria-valuemax="100">
+  </div>
+</div>
+
+<!-- Btn Select files -->
+<button mdbBtn *ngIf="!uploading"
+    outline="true" color="primary"
+    aria-label="Close" mdbWavesEffect
+    (click)="fileInput.click()">
+
+  <i class="fa fa-picture-o mr-2" aria-hidden="true"></i>Select files ...
+</button>
+
+
+

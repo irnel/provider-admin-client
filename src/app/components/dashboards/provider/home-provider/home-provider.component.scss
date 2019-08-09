@@ -1,0 +1,23 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  position: fixed;
+  width: 200px;
+  padding-top: 40px;
+}
+
+main {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: white !important;
+}
+
+a:hover, a:active{
+  color:#ffbb33 !important;
+}
+

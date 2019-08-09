@@ -1,0 +1,138 @@
+<!-- Provider Details -->
+<div *ngIf="observer$ | async; else progress" class="w-responsive h-responsive mr-auto ml-auto mt-3">
+  <!-- navigation -->
+  <mdb-card>
+    <h6 class="h6-responsive pt-3 card-text font-1">
+      <!-- Provider -->
+      <div *ngIf="!isAdmin">
+        <i (click)="redirectToProviderHome()" class="fa fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
+        <a routerLink="/provider-dashboard/workspace/home">Home</a>
+        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <span>Details</span>
+      </div>
+
+      <!-- Admin -->
+      <div *ngIf="isAdmin">
+        <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <a routerLink="/admin-dashboard/workspace/home">Home</a>
+        <i class="fa fa-angle-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a routerLink="/admin-dashboard/workspace/users">Users</a>
+        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a >{{user.displayName}}</a>
+        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
+        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <span>Details</span>
+      </div>
+    </h6>
+
+    <hr>
+
+    <mdb-card-body>
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="view">
+            <img class="d-block w-100 rounded animated fadeInLeft" src="{{provider.url}}" alt="provider image">
+          </div>
+        </div>
+  
+        <div class="col-lg-7">
+          <h4 class="h4-responsive font-weight-bold">
+            {{provider.name}}
+          </h4>
+          <div class="d-flex">
+            <i class="fa fa-map-marker prefix mr-2" aria-hidden="true"></i>
+            <p class="card-text small-font">{{provider.address.formattedAddress}}</p>
+          </div>
+
+          <div class="d-flex">
+            <i class="fa fa-phone prefix mr-2" aria-hidden="true"></i>
+            <p class="card-text small-font">{{provider.phone}}</p>
+          </div>
+
+          <h6 class="h6-responsive"><strong>Hours Available</strong></h6>
+          <p class="card-text small-font">{{provider.schedule}}</p>
+
+          <p  class="card-text small-font" *ngIf="provider.description.length > 0">
+            {{provider.description}}
+          </p>
+        </div>
+      
+      </div>
+    </mdb-card-body>
+
+    <mdb-card-footer>
+      <h5 class="mb-3">
+         <!-- Add category -->
+        <a *ngIf="!isAdmin" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories/create">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-3">
+            <i class="fa fa-plus prefix pl-2 mr-2" aria-hidden="true"></i>Category
+          </mdb-badge>
+        </a>
+
+        <!-- List categories -->
+        <!-- Provider -->
+        <a *ngIf="!isAdmin" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/categories">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+            <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Categories
+          </mdb-badge>
+        </a>
+        <!-- Admin -->
+        <a *ngIf="isAdmin" routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/categories"> 
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+              <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Categories
+          </mdb-badge>
+        </a>
+
+        <!-- Add cashier -->
+        <a *ngIf="!isAdmin" class="ml-4" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/cashiers/create">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-3">
+              <i class="fa fa-plus prefix pl-2 mr-2" aria-hidden="true"></i>Cashier
+            </mdb-badge>
+        </a> 
+
+        <!-- List cashiers -->
+        <!-- Provider -->
+        <a *ngIf="!isAdmin" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/cashiers">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+            <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Cashiers
+          </mdb-badge>
+        </a> 
+        <!-- Admin -->
+        <a *ngIf="isAdmin" routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/cashiers">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+            <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Cashiers
+          </mdb-badge>
+        </a>
+
+        <!-- List orders -->
+        <!-- Provider -->
+        <a *ngIf="!isAdmin" class="ml-4" routerLink="/provider-dashboard/workspace/providers/{{providerId}}/orders">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+            <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Orders
+          </mdb-badge>
+        </a>
+        <!-- Admin -->
+        <a *ngIf="isAdmin" routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/orders">
+          <mdb-badge class="mr-2 mt-3 py-2" color="blue darken-1">
+            <i class="fa fa-list-ol prefix pl-2 mr-2" aria-hidden="true"></i>Orders
+          </mdb-badge>
+        </a>
+      </h5>
+    </mdb-card-footer>
+  </mdb-card>
+
+  <!-- Floating Action Button -->
+  <a *ngIf="!isAdmin" type="button" mat-fab class="pink mat-elevation-z8"
+          routerLink="/provider-dashboard/workspace/providers/{{providerId}}/edit">
+
+      <i class="material-icons">mode_edit</i>
+    </a>
+
+</div>
+
+<ng-template #progress>
+  <app-circle-progress [state]="state"></app-circle-progress>
+</ng-template>

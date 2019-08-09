@@ -1,0 +1,114 @@
+<!-- Edit Cashier -->
+<mdb-card *ngIf="observer$ | async; else progress" id="header" class="w-responsive mt-3 center ml-auto mr-auto">
+  <!-- Card Header -->
+  <mdb-card-header class="px-lg-5">
+    <h3 class="text-center mt-1">
+      <span class="badge badge-primary waves-light">{{title}}</span>
+    </h3>
+
+    <h6 class="pt-1">
+      <i (click)="redirectToHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/home">Home</a>
+      <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+      <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{provider.name}}</a>
+      <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/cashiers">Cashiers</a>
+      <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+      <span class="text-capitalize">{{mode}}</span>
+    </h6>
+
+  </mdb-card-header>
+
+  <!--Card content-->
+  <mdb-card-body class="px-lg-5">
+
+    <form [formGroup]="editForm">
+
+      <!-- Name -->
+      <div class="md-form form-sm mt-1">
+        <i class="fa fa-user prefix" aria-hidden="true"></i>
+        <input mdbInputDirective type="text" class="form-control"
+            id="formName" formControlName="name"
+            [errorMessage]="nameError"
+            [validateSuccess]="false">
+
+        <label for="formName">Name</label>
+      </div>
+
+      <!-- Email -->
+      <div class="md-form form-sm mt-0">
+        <i class="fa fa-envelope prefix" aria-hidden="true"></i>
+        <input mdbInputDirective type="email" class="form-control"
+            id="formEmail" formControlName="email"
+            [validateSuccess]="false"
+            [errorMessage]="emailError">
+
+        <label for="formEmail">Email</label>
+      </div>
+
+      <!-- Password -->
+      <div class="md-form form-sm mt-0">
+        <i class="fa fa-lock prefix" aria-hidden="true"></i>
+        <input mdbInputDirective type="password" class="form-control"
+          id="formPassword" data-error="password must be at least 6 character"
+          [validateSuccess]="false" minlength="6" formControlName="password">
+
+        <label for="formPassword">Password</label>
+      </div>
+
+      <!-- Confirmation Password -->
+      <div class="md-form form-sm mt-0 mb-0">
+        <i class="fa fa-repeat prefix" aria-hidden="true"></i>
+        <input mdbInputDirective type="password" class="form-control"
+          id="formPasswordConfirmation" data-error="Confirmation password is required"
+          [validateSuccess]="false" formControlName="passwordConfirmation">
+
+        <label for="formPasswordConfirmation">Confirmation password</label>
+      </div>
+
+    </form>
+
+  </mdb-card-body>
+
+  <!-- Footer -->
+  <mdb-card-footer>
+    <div class="pl-4">
+      <button mdbBtn [disabled]="loading"
+          color="primary"
+          class="relative waves-light" mdbWavesEffect
+          (click)="editCashier()">
+
+        <!-- Create Mode -->
+        <div *ngIf="!edit" >
+          <i *ngIf="!loading" class="fa fa-plus left mr-2" aria-hidden="true"></i>Create
+          <i *ngIf="loading" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="edit">
+          <i *ngIf="!loading" class="fa fa-floppy-o left mr-2" aria-hidden="true"></i>Save
+          <i *ngIf="loading" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+        </div>
+
+      </button>
+
+      <!-- Button Cancel -->
+      <button mdbBtn [disabled]="loading"
+          outline="true" color="primary"
+          aria-label="Close" mdbWavesEffect
+          (click)="cancel()">
+
+        <i class="fa fa-ban left mr-2" aria-hidden="true"></i>Cancel
+      </button>
+    </div>
+
+  </mdb-card-footer>
+
+</mdb-card>
+
+<ng-template #progress>
+  <app-circle-progress [state]="state"></app-circle-progress>
+</ng-template>
+

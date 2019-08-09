@@ -1,0 +1,204 @@
+<!-- Worksapce Cashier -->
+<div *ngIf="observer$ | async; else progress" class="mt-3">
+  <mdb-card class="mb-2">
+    <!-- Heading -->
+    <mdb-card-header>
+      <div class="row">
+        <!-- Breadcrumbs navigation -->
+        <div class="col">
+          <h6 *ngIf="provider" class="h6-responsive pt-2 ml-3 card-text">
+            <!-- Provider -->
+            <div *ngIf="userRole ==='provider'">
+              <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+              <a routerLink="/provider-dashboard/workspace/home">Home</a>
+              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
+              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{provider.name}}</a>
+              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <span>Cashiers</span>
+            </div>
+
+            <!-- Admin -->
+            <div *ngIf="userRole === 'admin'">
+              <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+              <a routerLink="/admin-dashboard/workspace/home">Home</a>
+              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <a routerLink="/admin-dashboard/workspace/users">Users</a>
+              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <span>Cashiers</span>
+            </div>
+          </h6>
+        </div>
+
+        <!-- Icon Search -->
+        <div *ngIf="!visibility" class="col-2 d-flex justify-content-end animated bounceInLeft pt-2">
+          <i class="fa fa-search prefix fa-lg" aria-hidden="true"
+            mdbTooltip="Open search" placement="left"
+            (click)="setVisibility(true)"></i>
+        </div>
+      </div>
+      
+      <!-- Filter Data -->
+      <div *ngIf="visibility" class="row d-flex animated bounceInRight">
+        <div class="col-sm-7">
+          <div class="md-form form-sm">
+            <i class="fa fa-times prefix" aria-hidden="true"
+              mdbTooltip="Close search" placement="top"
+              (click)="setVisibility(false)"></i>
+            <input mdbInputDirective
+                type="text" id="formFilter" class="form-control"
+                (keyup)="applyFilter($event.target.value)">
+
+            <label for="formFilter">Filter</label>
+          </div>
+        </div>
+      </div>
+    </mdb-card-header> 
+
+    <!-- Content -->
+    <mdb-card-body>
+      <h6 *ngIf="cashiers.length === 0" class="h6-responsive text-center">
+        <p class="font-italic tc-custom">No cashiers found.</p>
+      </h6>
+
+      <div *ngIf="cashiers.length > 0">
+        <!-- Table -->
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Column Name -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let cashier"
+                (click)="redirectToEditCashier(cashier.uid)">
+    
+              <p class="ml-2">{{cashier.displayName}}</p>
+            </td>
+          </ng-container>
+    
+          <!-- Column Email -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let cashier"
+                (click)="redirectToEditCashier(cashier.uid)">
+    
+              <p class="ml-2">{{cashier.email}}</p>
+            </td>
+          </ng-container>
+    
+          <!-- Column Provider -->
+          <ng-container matColumnDef="provider">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Provider </th>
+            <td mat-cell *matCellDef="let cashier"
+                (click)="redirectToEditCashier(cashier.uid)">
+    
+              <p class="ml-2">{{cashier.providerName}}</p>
+            </td>
+          </ng-container>
+    
+          <!-- Column Operation -->
+          <ng-container matColumnDef="operation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let cashier">
+              <!-- Options -->
+              <div class="block-options">
+                <!-- Option Edit -->
+                <a *ngIf="!isAdmin" type="button"
+                    mdbTooltip="Edit cashier"
+                    placement="top"
+                    class="waves-light mr-3 ml-3"
+                    (click)="redirectToEditCashier(cashier.uid)">
+    
+                  <i class="fa fa-pencil prefix" style="color: #37474F" aria-hidden="true"></i>
+                </a>
+                <!-- Option Delete -->
+                <a *ngIf="!isAdmin" type="button"
+                    mdbTooltip="Delete cashier"
+                    placement="top"
+                    class="relative waves-light"
+                    (click)="frame.toggle()">
+    
+                  <i class="fa fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
+                </a>
+    
+                <!-- Modal Form Delete -->
+                <div mdbModal #frame="mdbModal"
+                    class="modal fade right modal-scrolling"
+                    tabindex="-1" role="dialog" aria-labelledby="frameModalTop"
+                    aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+    
+                  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
+                    <div class="modal-content">
+    
+                      <!-- Header -->
+                      <div class="modal-header">
+                        <p class="heading">
+                          <strong>Delete cashier</strong>
+                        </p>
+    
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                          <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+    
+                      </div>
+                      <!-- Header -->
+    
+                      <!-- Body -->
+                      <div class="modal-body">
+                        <p>This action is irreversible and you will not be able to recover your cashier's data.</p>
+                        <p><strong>Are you sure you want to delete <b>{{cashier.displayName}}'s</b> data?</strong></p>
+                      </div>
+                      <!-- Body -->
+    
+                      <!-- Footer -->
+                      <div class="modal-footer flex-center">
+                        <!-- Button Delete -->
+                        <button mdbBtn
+                            [disabled]="deleting"
+                            color="danger"
+                            class="relative waves-light" mdbWavesEffect
+                            (click)="deleteCashier(cashier.uid)">
+    
+                          <i *ngIf="!deleting"class="fa fa-trash-o left mr-2" aria-hidden="true"></i>Delete
+                          <i *ngIf="deleting" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+                        </button>
+    
+                        <!-- Button Cancel -->
+                        <button mdbBtn (click)="frame.hide()"
+                            type="submit" outline="true" color="danger"
+                            aria-label="Close" mdbWavesEffect>
+    
+                          <i class="fa fa-ban left mr-2" aria-hidden="true"></i>Cancel
+                        </button>
+    
+                      </div>
+                      <!-- Footer -->
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal Form Delete -->
+              </div>
+    
+            </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let cashier; columns: columnsToDisplay;"></tr>
+    
+        </table>
+        <!-- Table -->
+    
+        <mat-paginator [pageSizeOptions]='pageSizeOptions' showFirstLastButtons></mat-paginator>
+    
+      </div>
+    </mdb-card-body>    
+
+  </mdb-card>
+  
+  <!-- Floating Action Button -->
+  <a *ngIf="!isAdmin" routerLink="create" type="button" mat-fab class="pink mat-elevation-z8">+</a>
+
+</div>
+
+<ng-template #progress>
+  <app-circle-progress [state]="state"></app-circle-progress>
+</ng-template>
