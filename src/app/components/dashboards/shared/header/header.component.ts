@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, NgZone } from '@angular/core';
-import { SnotifyService } from 'ng-snotify';
 
-import { AuthService } from './../../../../services';
+import { AuthService, NotificationService } from './../../../../services';
 import { User } from './../../../../models';
 
 
@@ -19,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private ngZone: NgZone,
     private readonly authService: AuthService,
-    private readonly toast: SnotifyService
+    private readonly notification: NotificationService
   ) {
 
     this.currentUser = this.authService.currentUserValue;
@@ -38,18 +37,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     })
     .catch(error => {
-      this.toast.error(error.message, '', {
-        backdrop: 0.2,
-        closeOnClick: true,
-        pauseOnHover: true,
-        showProgressBar: false,
-        timeout: 2500
-      });
+      this.notification.ErrorMessage(error.message, '');
     });
   }
 
   public onToggleSideNav = () => {
     this.sidenavToggle.emit();
   }
-
 }

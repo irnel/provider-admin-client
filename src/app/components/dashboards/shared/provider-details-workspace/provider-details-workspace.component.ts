@@ -18,6 +18,7 @@ export class ProviderDetailsWorkspaceComponent implements OnInit {
   providerId: string;
   userRole: string;
   observer$: Observable<any>;
+  panelOpenState = false;
   state = 'waiting';
   isAdmin = false;
 

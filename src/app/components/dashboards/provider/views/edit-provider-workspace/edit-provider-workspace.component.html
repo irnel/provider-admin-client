@@ -29,8 +29,17 @@
         <label for="formName">Name</label>
       </div>
 
+      <!-- Phone -->
+      <div class="md-form form-sm mt-2">
+        <input mdbInputDirective type="text" class="form-control"
+            id="formPhoneNumber" formControlName="phone"
+            [validateSuccess]="false">
+
+        <label for="formPhoneNumber">Phone number</label>
+      </div>
+
       <!-- Google maps (Location) -->
-      <div class="md-form form-sm mt-3">
+      <div class="md-form form-sm mt-2">
         <input #search mdbInputDirective type="text" class="form-control"
             id="formAddress" formControlName="address"
             [errorMessage]="addressError"
@@ -51,12 +60,11 @@
               {{address.lng}}
             </div>
           </agm-info-window>
-
         </agm-map>
       </div>
 
       <!-- Available Hours -->
-      <div class="mt-5">
+      <div class="mt-2">
         <h5 class="h5-responsive">
           <strong>Available Hours</strong>
         </h5>
@@ -64,35 +72,168 @@
         <table class="table table-responsive-sm table-sm table-hover">
           <thead class="mdb-color lighten-5">
             <tr>
-              <th class="font-weight-bold">Day of Week</th>
-              <th class="font-weight-bold">Opening Time</th>
-              <th class="font-weight-bold">Closing Time</th>
+              <th class="font-weight-bold">
+                <i class="fas fa-calendar-day mr-2" aria-hidden="true"></i>Day of Week
+              </th>
+              <th class="font-weight-bold">
+                <i class="fas fa-clock mr-2" aria-hidden="true"></i>Opening Time
+              </th>
+              <th class="font-weight-bold">
+                <i class="fas fa-clock mr-2" aria-hidden="true"></i>Closing Time
+              </th>
             </tr>
           </thead>
 
           <tbody>
-                        
+            <!-- Monday -->
+            <tr>
+              <td class="align-middle">Monday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="mondayOpeningTime" formControlName="mondayOT" readonly>
+                      
+                  <ngx-material-timepicker #mondayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="mondayClosingTime" formControlName="mondayCT" readonly>
+
+                  <ngx-material-timepicker #mondayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <!-- Tuesday -->
+            <tr>
+              <td class="align-middle">Tuesday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="tuesdayOpeningTime" formControlName="tuesdayOT" readonly>
+
+                  <ngx-material-timepicker #tuesdayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="tuesdayClosingTime" formControlName="tuesdayCT" readonly>
+
+                  <ngx-material-timepicker #tuesdayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <!-- Wednesday -->
+            <tr>
+              <td class="align-middle">Wednesday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="wednesdayOpeningTime" formControlName="wednesdayOT" readonly>
+
+                  <ngx-material-timepicker #wednesdayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="wednesdayClosingTime" formControlName="wednesdayCT" readonly>
+
+                  <ngx-material-timepicker #wednesdayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <!-- Thursday -->
+            <tr>
+              <td class="align-middle">Thursday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="thursdayOpeningTime" formControlName="thursdayOT" readonly>
+
+                  <ngx-material-timepicker #thursdayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="thursdayClosingTime" formControlName="thursdayCT" readonly>
+
+                  <ngx-material-timepicker #thursdayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <!-- Friday -->
+            <tr>
+              <td class="align-middle">Friday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="fridayOpeningTime" formControlName="fridayOT" readonly>
+
+                  <ngx-material-timepicker #fridayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="fridayClosingTime" formControlName="fridayCT" readonly>
+                      
+                  <ngx-material-timepicker #fridayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+            <!-- Saturday -->
+            <tr>
+              <td class="align-middle">Saturday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="saturdayOpeningTime" formControlName="saturdayOT" readonly>
+                      
+                  <ngx-material-timepicker #saturdayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput placeholder="closing time" aria-label="default time"
+                        [ngxTimepicker]="saturdayClosingTime" formControlName="saturdayCT" readonly>
+
+                    <ngx-material-timepicker #saturdayClosingTime></ngx-material-timepicker>
+                  </mat-form-field>
+                </td>
+            </tr>
+            <!-- Sunday -->
+            <tr>
+              <td class="align-middle">Sunday</td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="opening time" aria-label="default time"
+                      [ngxTimepicker]="sundayOpeningTime" formControlName="sundayOT" readonly>
+
+                  <ngx-material-timepicker #sundayOpeningTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput placeholder="closing time" aria-label="default time"
+                      [ngxTimepicker]="sundayClosingTime" formControlName="sundayCT" readonly>
+
+                  <ngx-material-timepicker #sundayClosingTime></ngx-material-timepicker>
+                </mat-form-field>
+              </td>
+            </tr>
+                                    
           </tbody>
         </table>
 
-        <h6 class="h6-responsive">
+        <!-- <h6 class="h6-responsive">
           <p class="font-italic tc-custom">No schedule has been selected</p>
-        </h6>
-
-        <button mdbBtn outline="true" color="primary"aria-label="Close" mdbWavesEffect>
-          <i class="far fa-calendar-alt left mr-2" aria-hidden="true"></i>Select
-        </button>
-        
+        </h6> -->
+                        
       </div>
-
-      <!-- Phone -->
-      <div class="md-form form-sm mt-5">
-          <input mdbInputDirective type="text" class="form-control"
-              id="formPhoneNumber" formControlName="phone"
-              [validateSuccess]="false">
-  
-          <label for="formPhoneNumber">Phone number</label>
-        </div>
 
       <!-- Description -->
       <div class="md-form form-sm mt-5">

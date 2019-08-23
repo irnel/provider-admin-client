@@ -15,7 +15,7 @@ export class GalleryComponent implements OnInit {
   @Input() model: any;
   @Input() serverFiles$: Observable<any>;
   @Input() progress$: Observable<number>;
-  @Input() uploading: Boolean;
+  @Input() uploading: boolean;
   @Input() mode: string;
   @ViewChild('alert', {static: true}) alert: ElementRef;
 

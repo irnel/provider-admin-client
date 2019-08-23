@@ -9,7 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 import { MapsAPILoader } from '@agm/core';
 import { ProviderService, AuthService, NotificationService, FileService } from './../../../../../services';
 import { Config } from '../../../../../infrastructure';
-import { Address, Provider, FileInfo } from '../../../../../models';
+import { Address, Provider, FileInfo, Schedule } from '../../../../../models';
 import { Observable, interval } from 'rxjs';
 
 @Component({
@@ -19,9 +19,10 @@ import { Observable, interval } from 'rxjs';
 })
 export class EditProviderWorkspaceComponent implements OnInit {
   editForm: FormGroup;
-  public zoom: number;
-  public provider: Provider;
-  public address: Address;
+  zoom: number;
+  provider: Provider;
+  address: Address;
+  availableHours: Schedule[] = [];
 
   // HTML values
   @ViewChild('search', {static: false}) search: any;
@@ -42,7 +43,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
   mode: string;
   loading = false;
   state = 'waiting';
-
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -67,7 +68,20 @@ export class EditProviderWorkspaceComponent implements OnInit {
         Validators.pattern(this.regEx)]
       )],
       phone: ['', Validators.nullValidator],
-      // schedule: ['', Validators.nullValidator],
+      mondayOT: ['', Validators.nullValidator],
+      mondayCT: ['', Validators.nullValidator],
+      tuesdayOT: ['', Validators.nullValidator],
+      tuesdayCT: ['', Validators.nullValidator],
+      wednesdayOT: ['', Validators.nullValidator],
+      wednesdayCT: ['', Validators.nullValidator],
+      thursdayOT: ['', Validators.nullValidator],
+      thursdayCT: ['', Validators.nullValidator],
+      fridayOT: ['', Validators.nullValidator],
+      fridayCT: ['', Validators.nullValidator],
+      saturdayOT: ['', Validators.nullValidator],
+      saturdayCT: ['', Validators.nullValidator],
+      sundayOT: ['', Validators.nullValidator],
+      sundayCT: ['', Validators.nullValidator],
       description: ['', Validators.nullValidator]
     });
 
@@ -243,13 +257,18 @@ export class EditProviderWorkspaceComponent implements OnInit {
 
     // validate address
     if (this.address.formattedAddress === '' && this.form.address.value !== '') {
-      this.notification.ErrorMessage(
-        'select a valid address from the list.', '', 2500);
-
+      this.notification.ErrorMessage('select a valid address from the list.', '');
       this.loading = false;
       this.goToTop();
 
       return;
+    }
+
+    // Validate Schedule
+    this.setAvailableHours();
+    if (this.availableHours.length === 0) {
+      this.notification.ErrorMessage('', '');
+      this.loading = false;
     }
 
     // create
@@ -259,6 +278,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
         name:  this.form.name.value,
         address: this.address,
         phone: this.form.phone.value,
+        availableHours: this.availableHours,
         description: this.form.description.value,
         userId: this.authService.currentUserValue.uid,
         url: ''
@@ -276,7 +296,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
           this.provider = provider;
         })
         .catch(error => {
-          this.notification.ErrorMessage(error.message, '', 2500);
+          this.notification.ErrorMessage(error.message, '');
           this.loading = false;
 
           return;
@@ -291,14 +311,14 @@ export class EditProviderWorkspaceComponent implements OnInit {
       this.provider.name = this.form.name.value;
       this.provider.address = this.address;
       this.provider.phone = this.form.phone.value;
-      // this.provider.schedule = this.form.schedule.value;
+      this.provider.availableHours = this.availableHours;
       this.provider.description = this.form.description.value;
 
       this.providerService.update(this.provider).then(() => {
         this.uploadFiles();
       })
       .catch(error => {
-        this.notification.ErrorMessage(error.message, '', 2500);
+        this.notification.ErrorMessage(error.message, '');
         this.loading = false;
 
         return;
@@ -335,5 +355,69 @@ export class EditProviderWorkspaceComponent implements OnInit {
       file.modelType = 'providers';
       return file;
     });
+  }
+
+  setAvailableHours() {
+    // Monday
+    if (this.form.mondayOT.value !== null &&  this.form.mondayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Monday',
+        opening: this.form.mondayOT.value,
+        closing: this.form.mondayCT.value,
+      });
+    }
+
+    // Tuesday
+    if (this.form.tuesdayOT.value !== null &&  this.form.tuesdayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Tuesday',
+        opening: this.form.tuesdayOT.value,
+        closing: this.form.tuesdayCT.value,
+      });
+    }
+
+    // Wednesday
+    if (this.form.wednesdayOT.value !== null &&  this.form.wednesdayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Wednesday',
+        opening: this.form.wednesdayOT.value,
+        closing: this.form.wednesdayCT.value
+      });
+    }
+
+    // Thursday
+    if (this.form.thursdayOT.value !== null &&  this.form.thursdayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Thursday',
+        opening: this.form.thursdayOT.value,
+        closing: this.form.thursdayCT.value
+      });
+    }
+
+    // Friday
+    if (this.form.fridayOT.value !== null &&  this.form.fridayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Friday',
+        opening: this.form.fridayOT.value,
+        closing: this.form.fridayCT.value
+      });
+    }
+
+    // Saturday
+    if (this.form.saturdayOT.value !== null &&  this.form.saturdayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Saturday',
+        opening: this.form.saturdayOT.value,
+        closing: this.form.saturdayCT.value
+      });
+    }
+
+    if (this.form.sundayOT.value !== null &&  this.form.sundayCT.value !== null) {
+      this.availableHours.push({
+        dayOfWeek: 'Sunday',
+        opening: this.form.sundayOT.value,
+        closing: this.form.sundayCT.value
+      });
+    }
   }
 }

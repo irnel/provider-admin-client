@@ -20,7 +20,7 @@
         <i class="fa fa-angle-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users">Users</a>
         <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
-        <a >{{user.displayName}}</a>
+        <a >{{ user.displayName }}</a>
         <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
         <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
@@ -34,32 +34,66 @@
       <div class="row">
         <div class="col-lg-5">
           <div class="view">
-            <img class="d-block w-100 rounded animated fadeInLeft" src="{{provider.url}}" alt="provider image">
+            <img class="d-block w-100 rounded animated fadeInLeft" src="{{ provider.url }}" alt="provider image">
           </div>
         </div>
   
         <div class="col-lg-7">
           <h4 class="h4-responsive font-weight-bold">
-            {{provider.name}}
+            {{ provider.name }}
           </h4>
           <div class="d-flex">
-            <i class="fa fa-map-marker prefix mr-2" aria-hidden="true"></i>
-            <p class="card-text small-font">{{provider.address.formattedAddress}}</p>
+            <i class="fas fa-map-marker-alt prefix mr-2" aria-hidden="true"></i>
+            <p class="card-text small-font">{{ provider.address.formattedAddress }}</p>
           </div>
 
-          <div class="d-flex">
-            <i class="fa fa-phone prefix mr-2" aria-hidden="true"></i>
-            <p class="card-text small-font">{{provider.phone}}</p>
+          <div class="d-flex" *ngIf="provider.phone">
+            <i class="fas fa-phone prefix mr-2" aria-hidden="true"></i>
+            <p class="card-text small-font">{{ provider.phone }}</p>
           </div>
 
-          <h6 class="h6-responsive"><strong>Hours Available</strong></h6>
-          <p class="card-text small-font">{{provider.schedule}}</p>
+          <!-- <h6 class="h6-responsive"><strong>Hours Available</strong></h6>
+          <div class="row" *ngFor="let item of provider.availableHours">
+            <div class="col-sm-5 card-text1 small-font">{{ item.dayOfWeek }}</div>
+            <div class="col card-text1 small-font">{{ item.opening + " - " + item.closing }}</div>
+          </div>
 
           <p  class="card-text small-font" *ngIf="provider.description.length > 0">
-            {{provider.description}}
+            {{ provider.description }}
           </p>
-        </div>
-      
+         -->
+
+          <mat-accordion>
+            <!-- Hours Available -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h6 class="h6-responsive"><strong>Hours Available</strong></h6>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+          
+              <div class="row" *ngFor="let item of provider.availableHours">
+                <div class="col-sm-5 card-text1 small-font">{{ item.dayOfWeek }}</div>
+                <div class="col card-text1 small-font">{{ item.opening + " - " + item.closing }}</div>
+              </div>
+            </mat-expansion-panel>
+
+            <!-- Description -->
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h6 class="h6-responsive"><strong>Description</strong></h6>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <p  class="card-text small-font" *ngIf="provider.description.length > 0">
+                {{ provider.description }}
+              </p>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </div>     
       </div>
     </mdb-card-body>
 
