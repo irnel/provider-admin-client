@@ -5,25 +5,25 @@
     <h6 class="h6-responsive pt-3 card-text font-1">
       <!-- Provider -->
       <div *ngIf="!isAdmin">
-        <i (click)="redirectToProviderHome()" class="fa fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
+        <i (click)="redirectToProviderHome()" class="fas fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/home">Home</a>
-        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
-        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Details</span>
       </div>
 
       <!-- Admin -->
       <div *ngIf="isAdmin">
-        <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <i (click)="redirectToAdminHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/home">Home</a>
-        <i class="fa fa-angle-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users">Users</a>
-        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a >{{ user.displayName }}</a>
-        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
-        <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Details</span>
       </div>
     </h6>
@@ -162,9 +162,9 @@
   <a *ngIf="!isAdmin" type="button" mat-fab class="pink mat-elevation-z8"
           routerLink="/provider-dashboard/workspace/providers/{{providerId}}/edit">
 
-      <i class="material-icons">mode_edit</i>
-    </a>
-
+    <i class="material-icons">mode_edit</i>
+  </a>
+  
 </div>
 
 <ng-template #progress>

@@ -6,16 +6,16 @@
       <div class="row">
         <!-- Breadcrumbs navigation -->
         <div class="col">
-          <h6 *ngIf="provider" class="h6-responsive pt-2 ml-3 card-text">
+          <h6 *ngIf="provider" class="h6-responsive pt-2 ml-3 card-text font-1">
             <!-- Provider -->
             <div *ngIf="!isAdmin">
-              <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+              <i (click)="redirectToProviderHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
               <a routerLink="/provider-dashboard/workspace/home">Home</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{provider.name}}</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <span>Categories</span>
             </div>
 
@@ -23,15 +23,15 @@
             <div *ngIf="isAdmin">
               <i (click)="redirectToAdminHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
               <a routerLink="/admin-dashboard/workspace/home">Home</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a routerLink="/admin-dashboard/workspace/providers">Users</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a>{{user.displayName}}</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{category.providerName}}</a>
-              <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+              <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <span>Categories</span>
             </div>
             
@@ -40,7 +40,7 @@
 
         <!-- Icon Search -->
         <div *ngIf="!visibility" class="col-2 d-flex justify-content-end animated bounceInLeft pt-2">
-          <i class="fa fa-search prefix fa-lg" aria-hidden="true"
+          <i class="fas fa-search prefix fa-lg" aria-hidden="true"
             mdbTooltip="Open search" placement="left"
             (click)="setVisibility(true)"></i>
         </div>
@@ -50,7 +50,7 @@
       <div *ngIf="visibility" class="row d-flex animated bounceInRight">
         <div class="col-sm-7">
           <div class="md-form form-sm">
-            <i class="fa fa-times prefix" aria-hidden="true"
+            <i class="fas fa-times prefix" aria-hidden="true"
               mdbTooltip="Close search" placement="top"
               (click)="setVisibility(false)"></i>
             <input mdbInputDirective
@@ -141,7 +141,7 @@
                     class="waves-light ml-3"
                     (click)="redirectToCategoryDetails(category.id)">
     
-                  <i class="fa fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
+                  <i class="fas fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
                 <!-- Option Edit -->
                 <a *ngIf="!isAdmin" type="button"
@@ -150,7 +150,7 @@
                     class="waves-light mr-3 ml-3"
                     (click)="redirectToEditCategory(category.id)">
     
-                  <i class="fa fa-pencil prefix" style="color: #37474F" aria-hidden="true"></i>
+                  <i class="fas fa-pen prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
                 <!-- Option Delete -->
                 <a *ngIf="!isAdmin" type="button"
@@ -159,7 +159,7 @@
                     class="relative waves-light"
                     (click)="frame.toggle()">
     
-                  <i class="fa fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
+                  <i class="fas fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
     
                 <!-- Modal Form Delete -->
@@ -211,8 +211,8 @@
                             class="relative waves-light" mdbWavesEffect
                             (click)="deleteCategory(category)">
     
-                          <i *ngIf="!deleting"class="fa fa-trash-o left mr-2" aria-hidden="true"></i>Delete
-                          <i *ngIf="deleting" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+                          <i *ngIf="!deleting"class="fas fa-trash left mr-2" aria-hidden="true"></i>Delete
+                          <i *ngIf="deleting" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
                         </button>
     
                         <!-- Button Cancel -->
@@ -249,7 +249,9 @@
   <!-- Heading -->
 
   <!-- Floating Action Button -->
-  <a *ngIf="!isAdmin" routerLink="create" type="button" mat-fab class="pink mat-elevation-z8">+</a>
+  <a *ngIf="!isAdmin" routerLink="create" type="button" mat-fab class="pink mat-elevation-z8">
+    <i class="material-icons">add</i>
+  </a>
 
 </div>
 

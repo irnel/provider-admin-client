@@ -8,32 +8,32 @@
         <div class="row">
           <!-- Breadcrumbs navigation -->
           <div class="col">
-            <h6 class="h6-responsive pt-2 ml-3 card-text">
+            <h6 class="h6-responsive pt-2 ml-3 card-text font-1">
               <!-- Provider -->
               <div *ngIf="!isAdmin">
-                <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+                <i (click)="redirectToProviderHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
                 <a routerLink="/provider-dashboard/workspace/home">Home</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
-                <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{provider.name}}</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{ provider.name }}</a>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <span>Orders</span>
               </div>
   
               <!-- Admin -->
               <div *ngIf="isAdmin">
-                <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+                <i (click)="redirectToAdminHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
                 <a routerLink="/admin-dashboard/workspace/home">Home</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <a routerLink="/admin-dashboard/workspace/providers">Users</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <a>{{user.displayName}}</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{provider.name}}</a>
-                <i class="fa fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+                <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
                 <span>Orders</span>
               </div>
               
@@ -105,7 +105,7 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Paid</th>
               <td mat-cell *matCellDef='let order' (click)="redirectToOrderDetails(order.id)">
                 <h6>
-                  <span class="badge badge-pill mr-4"
+                  <span class="badge badge-pill text-white mr-4"
                       [ngStyle]="{'background-color': order.paid ? '#00C851' : '#ff4444' }">
       
                     {{order.paid}}
@@ -119,7 +119,7 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
               <td mat-cell *matCellDef='let order' (click)="redirectToOrderDetails(order.id)">
                 <h6>
-                  <span class="badge badge-pill mr-4"
+                  <span class="badge badge-pill text-white mr-4"
                       [ngStyle]="{'background-color': getStatusColor(order.status)}">
       
                     {{order.status}}
@@ -138,8 +138,8 @@
                     placement="top"
                     class="waves-light ml-3"
                     (click)="redirectToOrderDetails(order.id)">
-    
-                  <i class="fa fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
+                    
+                  <i class="fas fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
               </td>
             </ng-container>

@@ -1,46 +1,46 @@
 <!-- Category Details -->
-<div *ngIf="observer$ | async; else progress" class="w-responsive h-responsive mt-3 mb-3 center ml-auto mr-auto">
+<div *ngIf="observer$ | async; else progress" class="w-responsive h-responsive ml-auto mr-auto mt-3">
   <mdb-card>
-    <h6 class="h6-responsive pt-3 text-center">
+    <h6 class="h6-responsive pt-3 card-text font-1">
       <!-- Provider -->
       <div *ngIf="isProvider">
-        <i (click)="redirectToProviderHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <i (click)="redirectToProviderHome()" class="fas fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/home">Home</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/providers">Providers</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/details">{{order.providerName}}</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/provider-dashboard/workspace/providers/{{providerId}}/orders">Orders</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Details</span>
       </div>
 
       <!-- Admin -->
       <div *ngIf="isAdmin">
-        <i (click)="redirectToAdminHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <i (click)="redirectToAdminHome()" class="fa fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/home">Home</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users">Users</a>
-        <span>/</span>
-        <a>{{user.displayName}}</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a>{{  user.displayName }}</a>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers">Providers</a>
-        <span>/</span>
-        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{order.providerName}}</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
+        <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/details">{{ order.providerName }}</a>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <a routerLink="/admin-dashboard/workspace/users/{{userId}}/providers/{{providerId}}/orders">Orders</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Details</span>
       </div>
 
       <!-- Cashier -->
       <div *ngIf="isCashier">
-        <i (click)="redirectToCashierHome()" class="fa fa-home prefix mr-2" aria-hidden="true"></i>
+        <i (click)="redirectToCashierHome()" class="fas fa-home prefix ml-3 mr-2" aria-hidden="true"></i>
         <a routerLink="/cashier-dashboard/workspace/home">Home</a>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Order</span>
-        <span>/</span>
+        <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
         <span>Details</span>
       </div>
     </h6>
@@ -50,58 +50,58 @@
     <mdb-card-body> 
       <!-- Name -->
       <h3 class="h3-responsive font-weight-bold text-center">
-        <strong>{{order.displayName}}</strong>
+        <strong>{{ order.displayName }}</strong>
       </h3>
       <!-- Pickup Time -->
       <h5 class="h5-responsive text-center mt-1">
-        <span class="badge success-color" mdbTooltip="Order pickup time" placement="bottom">
-          <i class="fa fa-clock-o prefix mr-2" aria-hidden="true"></i>
-          <strong>{{order.pickupTime}}</strong>
+        <span class="badge success-color text-white" mdbTooltip="Order pickup time" placement="bottom">
+          <i class="fas fa-clock prefix mr-2" aria-hidden="true"></i>
+          <strong>{{ order.pickupTime }}</strong>
         </span>
       </h5>
                       
       <div class="row mt-2 mb-5">
         <!-- Order Id -->
         <div class="col">
-          <i class="fa fa-id-card-o prefix mr-2" aria-hidden="true"
+          <i class="fas fa-id-card prefix mr-2" aria-hidden="true"
             mdbTooltip="Order id" placement="top"></i>
-          {{order.id}}
+          {{ order.id }}
           <!-- CreatedDate -->
           <h6 class="h6-responsive dark-grey-text">
-            <i class="fa fa-calendar-o prefix mr-2" aria-hidden="true"
+            <i class="fas fa-calendar-check prefix mr-3" aria-hidden="true"
               mdbTooltip="Order created date" placement="top"></i>
-            {{order.createdDate.toMillis() | date: 'dd/MM/yyyy h:mm:ss a z' }}
+            {{ order.createdDate.toMillis() | date: 'dd/MM/yyyy h:mm:ss a z' }}
           </h6>
           <!-- Paid -->
           <h6 class="h6-responsive dark-grey-text">
-            <i class="fa fa-credit-card prefix mr-2 mt-1" aria-hidden="true"
+            <i class="fas fa-credit-card prefix mr-2 mt-1" aria-hidden="true"
               mdbTooltip="Order paid" placement="top"></i>
-            <span class="badge badge-pill ml-1 mr-4"
+            <span class="badge badge-pill text-white ml-1 mr-4"
                 [ngStyle]="{'background-color': order.paid ? '#00C851' : '#ff4444' }">
 
-              {{valueToString(order.paid) | uppercase}}
+              {{ valueToString(order.paid) | uppercase}}
             </span>
           </h6>
         </div> 
         
         <div class="col">
           <!-- Total Price -->
-          <h1 class="h1-responsive text-primary text-center font-weight-bold">${{total}}</h1>
+          <h1 class="h1-responsive text-primary text-center font-weight-bold">${{ total }}</h1>
           <!-- User Provider -->
           <h6 *ngIf="userRole === 'provider' || userRole === 'admin'"  class="h6-responsive text-center mt-2">
-            <span class="badge badge-pill ml-1 mr-4"
+            <span class="badge badge-pill text-white ml-1 mr-4"
                 mdbTooltip="Order status"
                 placement="bottom"
                 [ngStyle]="{'background-color': getStatusColor(order.status)}">
                 
-              {{order.status | uppercase}}
+              {{ order.status | uppercase}}
             </span>
           </h6>
           <!-- User Cashier -->
           <div *ngIf="userRole === 'cashier'" class="d-flex justify-content-center">
             <!-- Previous Status -->
             <div *ngIf="order.status !== 'pending'" class="mt-2 mr-2">
-              <i class="fa fa-undo fa-lg prefix" aria-hidden="true"
+              <i class="fas fa-undo fa-lg prefix" aria-hidden="true"
                 mdbTooltip="Previous status" placement="top"
                 (click)="previousStatus(order.status)"></i>
             </div>
@@ -111,7 +111,7 @@
                   [ngStyle]="{'background-color': getStatusColor(order.status)}"    
                   type="button" mdbWavesEffect>
   
-                {{order.status | uppercase}}
+                {{ order.status | uppercase }}
               </button>
               <div *ngIf="order.status === 'pending' || order.status === 'ready'" class="dropdown-menu">
                 <a *ngIf="order.status === 'pending'" class="dropdown-item"
@@ -172,19 +172,19 @@
                       <!-- Rows -->
                       <tr *ngFor="let product of order.products">
                         <th scope="row">
-                          <img src="{{product.url}}" alt="Product" 
+                          <img src="{{ product.url }}" alt="Product" 
                             class="card-img-top img-fluid z-depth-0 rounded">
                         </th>
                         <td style="width: 35%">
                           <h6 class="h6-responsive">
-                            <strong>{{product.name}}</strong>
+                            <strong>{{ product.name }}</strong>
                           </h6>
-                          <p class="text-muted">{{product.categoryName}}</p>
+                          <p class="text-muted">{{ product.categoryName }}</p>
                         </td>
                         <td></td>
                         <td class="font-weight-bold align-middle text-primary" style="width: 15%">
                           <h6 class="h6-responsive">
-                            <strong>${{product.price}}</strong>
+                            <strong>${{ product.price }}</strong>
                           </h6>
                         </td>
                         <td></td>
@@ -214,7 +214,7 @@
             No comments
           </p>
           <p *ngIf="order.remarks.length > 0" class="card-text small-font font-italic">
-            {{order.remarks}}
+            {{ order.remarks }}
           </p>
         </mat-expansion-panel>
       </mat-accordion>
