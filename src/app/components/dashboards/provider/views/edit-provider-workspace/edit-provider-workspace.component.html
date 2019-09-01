@@ -90,16 +90,22 @@
               <td class="align-middle">Monday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="mondayOpeningTime" formControlName="mondayOT" readonly>
+                  <input matInput placeholder="opening time"
+                      aria-label="default time"
+                      [ngxTimepicker]="mondayOpeningTime"
+                      [value]="mondayOtValue"
+                      formControlName="mondayOT" readonly>
                       
                   <ngx-material-timepicker #mondayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="mondayClosingTime" formControlName="mondayCT" readonly>
+                  <input matInput placeholder="closing time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="mondayClosingTime"
+                      [value]="mondayCtValue"
+                      formControlName="mondayCT" readonly>
 
                   <ngx-material-timepicker #mondayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
@@ -110,16 +116,22 @@
               <td class="align-middle">Tuesday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="tuesdayOpeningTime" formControlName="tuesdayOT" readonly>
+                  <input matInput placeholder="opening time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="tuesdayOpeningTime"
+                      [value]="tuesdayOtValue"
+                      formControlName="tuesdayOT" readonly>
 
                   <ngx-material-timepicker #tuesdayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="tuesdayClosingTime" formControlName="tuesdayCT" readonly>
+                  <input matInput placeholder="closing time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="tuesdayClosingTime"
+                      [value]="tuesdayCtValue" 
+                      formControlName="tuesdayCT" readonly>
 
                   <ngx-material-timepicker #tuesdayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
@@ -130,16 +142,22 @@
               <td class="align-middle">Wednesday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="wednesdayOpeningTime" formControlName="wednesdayOT" readonly>
+                  <input matInput placeholder="opening time"
+                      aria-label="default time"
+                      [ngxTimepicker]="wednesdayOpeningTime"
+                      [value]="wednesdayOtValue"
+                      formControlName="wednesdayOT" readonly>
 
                   <ngx-material-timepicker #wednesdayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="wednesdayClosingTime" formControlName="wednesdayCT" readonly>
+                  <input matInput placeholder="closing time"
+                      aria-label="default time"
+                      [ngxTimepicker]="wednesdayClosingTime"
+                      [value]="wednesdayCtValue" 
+                      formControlName="wednesdayCT" readonly>
 
                   <ngx-material-timepicker #wednesdayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
@@ -150,16 +168,22 @@
               <td class="align-middle">Thursday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="thursdayOpeningTime" formControlName="thursdayOT" readonly>
+                  <input matInput placeholder="opening time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="thursdayOpeningTime"
+                      [value]="thursdayOtValue" 
+                      formControlName="thursdayOT" readonly>
 
                   <ngx-material-timepicker #thursdayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="thursdayClosingTime" formControlName="thursdayCT" readonly>
+                  <input matInput placeholder="closing time"
+                      aria-label="default time"
+                      [ngxTimepicker]="thursdayClosingTime" 
+                      [value]="thursdayCtValue"
+                      formControlName="thursdayCT" readonly>
 
                   <ngx-material-timepicker #thursdayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
@@ -170,16 +194,22 @@
               <td class="align-middle">Friday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="fridayOpeningTime" formControlName="fridayOT" readonly>
+                  <input matInput placeholder="opening time"
+                      aria-label="default time"
+                      [ngxTimepicker]="fridayOpeningTime"
+                      [value]="fridayOtValue" 
+                      formControlName="fridayOT" readonly>
 
                   <ngx-material-timepicker #fridayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="fridayClosingTime" formControlName="fridayCT" readonly>
+                  <input matInput placeholder="closing time"
+                      aria-label="default time"
+                      [ngxTimepicker]="fridayClosingTime"
+                      [value]="fridayCtValue" 
+                      formControlName="fridayCT" readonly>
                       
                   <ngx-material-timepicker #fridayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
@@ -190,16 +220,22 @@
               <td class="align-middle">Saturday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="saturdayOpeningTime" formControlName="saturdayOT" readonly>
+                  <input matInput placeholder="opening time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="saturdayOpeningTime" 
+                      [value]="saturdayOtValue"
+                      formControlName="saturdayOT" readonly>
                       
                   <ngx-material-timepicker #saturdayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
                 <td>
                   <mat-form-field>
-                    <input matInput placeholder="closing time" aria-label="default time"
-                        [ngxTimepicker]="saturdayClosingTime" formControlName="saturdayCT" readonly>
+                    <input matInput placeholder="closing time" 
+                        aria-label="default time"
+                        [ngxTimepicker]="saturdayClosingTime"
+                        [value]="saturdayCtValue" 
+                        formControlName="saturdayCT" readonly>
 
                     <ngx-material-timepicker #saturdayClosingTime></ngx-material-timepicker>
                   </mat-form-field>
@@ -210,16 +246,22 @@
               <td class="align-middle">Sunday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" aria-label="default time"
-                      [ngxTimepicker]="sundayOpeningTime" formControlName="sundayOT" readonly>
+                  <input matInput placeholder="opening time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="sundayOpeningTime" 
+                      [value]="sundayOtValue"
+                      formControlName="sundayOT" readonly>
 
                   <ngx-material-timepicker #sundayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" aria-label="default time"
-                      [ngxTimepicker]="sundayClosingTime" formControlName="sundayCT" readonly>
+                  <input matInput placeholder="closing time" 
+                      aria-label="default time"
+                      [ngxTimepicker]="sundayClosingTime"
+                      [value]="sundayCtValue" 
+                      formControlName="sundayCT" readonly>
 
                   <ngx-material-timepicker #sundayClosingTime></ngx-material-timepicker>
                 </mat-form-field>

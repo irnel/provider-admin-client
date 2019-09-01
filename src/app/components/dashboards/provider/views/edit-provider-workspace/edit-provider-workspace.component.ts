@@ -7,10 +7,12 @@ import { Component, OnInit, ViewChild, NgZone, Inject } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
 
 import { MapsAPILoader } from '@agm/core';
+import { Observable, interval } from 'rxjs';
 import { ProviderService, AuthService, NotificationService, FileService } from './../../../../../services';
 import { Config } from '../../../../../infrastructure';
+import { DayOfWeek } from '../../../../../helpers';
 import { Address, Provider, FileInfo, Schedule } from '../../../../../models';
-import { Observable, interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-edit-provider-workspace',
@@ -43,7 +45,23 @@ export class EditProviderWorkspaceComponent implements OnInit {
   mode: string;
   loading = false;
   state = 'waiting';
-  
+
+  // Time Values
+  mondayOtValue: any;
+  mondayCtValue: any;
+  tuesdayOtValue: any;
+  tuesdayCtValue: any;
+  wednesdayOtValue: any;
+  wednesdayCtValue: any;
+  thursdayOtValue: any;
+  thursdayCtValue: any;
+  fridayOtValue: any;
+  fridayCtValue: any;
+  saturdayOtValue: any;
+  saturdayCtValue: any;
+  sundayOtValue: any;
+  sundayCtValue: any;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -112,7 +130,6 @@ export class EditProviderWorkspaceComponent implements OnInit {
 
         // set current position
         this.setCurrentPosition();
-
       } else {
         this.title = 'Edit Provider';
         this.edit = true;
@@ -126,15 +143,59 @@ export class EditProviderWorkspaceComponent implements OnInit {
           provider => {
             this.provider = provider;
             this.state = 'finished';
+
             // google maps values
             this.address = this.provider.address;
             this.zoom = 12;
+
+            // time values
+            this.provider.availableHours.forEach(schedule => {
+              switch (schedule.dayOfWeek) {
+                case DayOfWeek.Monday:
+                  this.mondayOtValue = schedule.opening;
+                  this.mondayCtValue = schedule.closing;
+                  break;
+
+                case DayOfWeek.Tuesday:
+                    this.tuesdayOtValue = schedule.opening;
+                    this.tuesdayCtValue = schedule.closing;
+                    break;
+
+                case DayOfWeek.Wednesday:
+                    this.wednesdayOtValue = schedule.opening;
+                    this.wednesdayCtValue = schedule.closing;
+                    break;
+
+                case DayOfWeek.Thursday:
+                    this.thursdayOtValue = schedule.opening;
+                    this.thursdayCtValue = schedule.closing;
+                    break;
+
+                case DayOfWeek.Friday:
+                    this.fridayOtValue = schedule.opening;
+                    this.fridayCtValue = schedule.closing;
+                    break;
+
+                case DayOfWeek.Saturday:
+                    this.saturdayOtValue = schedule.opening;
+                    this.saturdayCtValue = schedule.closing;
+                    break;
+
+                case DayOfWeek.Sunday:
+                    this.sundayOtValue = schedule.opening;
+                    this.sundayCtValue = schedule.closing;
+                    break;
+
+                default:
+                  break;
+              }
+            });
+
             // updated Form Control values
             this.editForm.patchValue({
               name: this.provider.name,
               address: this.provider.address.formattedAddress,
               phone: this.provider.phone,
-              // schedule: this.provider.schedule,
               description: this.provider.description
             });
           },
@@ -267,7 +328,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Validate Schedule
     this.setAvailableHours();
     if (this.availableHours.length === 0) {
-      this.notification.ErrorMessage('', '');
+      this.notification.ErrorMessage('You must select at least one day of the week', '');
       this.loading = false;
     }
 
@@ -361,7 +422,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Monday
     if (this.form.mondayOT.value !== null &&  this.form.mondayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Monday',
+        dayOfWeek: DayOfWeek.Monday,
         opening: this.form.mondayOT.value,
         closing: this.form.mondayCT.value,
       });
@@ -370,7 +431,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Tuesday
     if (this.form.tuesdayOT.value !== null &&  this.form.tuesdayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Tuesday',
+        dayOfWeek: DayOfWeek.Tuesday,
         opening: this.form.tuesdayOT.value,
         closing: this.form.tuesdayCT.value,
       });
@@ -379,7 +440,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Wednesday
     if (this.form.wednesdayOT.value !== null &&  this.form.wednesdayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Wednesday',
+        dayOfWeek: DayOfWeek.Wednesday,
         opening: this.form.wednesdayOT.value,
         closing: this.form.wednesdayCT.value
       });
@@ -388,7 +449,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Thursday
     if (this.form.thursdayOT.value !== null &&  this.form.thursdayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Thursday',
+        dayOfWeek: DayOfWeek.Thursday,
         opening: this.form.thursdayOT.value,
         closing: this.form.thursdayCT.value
       });
@@ -397,7 +458,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Friday
     if (this.form.fridayOT.value !== null &&  this.form.fridayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Friday',
+        dayOfWeek: DayOfWeek.Friday,
         opening: this.form.fridayOT.value,
         closing: this.form.fridayCT.value
       });
@@ -406,15 +467,16 @@ export class EditProviderWorkspaceComponent implements OnInit {
     // Saturday
     if (this.form.saturdayOT.value !== null &&  this.form.saturdayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Saturday',
+        dayOfWeek: DayOfWeek.Saturday,
         opening: this.form.saturdayOT.value,
         closing: this.form.saturdayCT.value
       });
     }
 
+    // Sunday
     if (this.form.sundayOT.value !== null &&  this.form.sundayCT.value !== null) {
       this.availableHours.push({
-        dayOfWeek: 'Sunday',
+        dayOfWeek: DayOfWeek.Sunday,
         opening: this.form.sundayOT.value,
         closing: this.form.sundayCT.value
       });
