@@ -140,7 +140,7 @@ export class RegisterComponent implements OnInit {
       parentId: null
     };
 
-    this.authService.SignUp(data, true).then(user => {
+    this.authService.SignUp(data).then(user => {
       this.loading = false;
       this.email = user.email;
       this.showModal();
@@ -159,9 +159,9 @@ export class RegisterComponent implements OnInit {
   }
 
   sendVerificationMail() {
-    this.sending = true;
+    this.sending = false;
     this.authService.SendVerificationMail().then(() => {
-      this.sending = false;
+      this.sending = true;
       this.notificationService.SuccessMessage(
         `Verification email sent to ${this.email}`, '');
     })

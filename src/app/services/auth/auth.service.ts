@@ -26,9 +26,16 @@ export class AuthService {
      /* Saving user data in local storage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(firebaseUser => {
+      console.log('Auth state');
       if (firebaseUser) {
         this.userService.getUserById(firebaseUser.uid).subscribe(
-          user => localStorage.setItem('user', JSON.stringify(user))
+          user => {
+            if (user.emailVerified) {
+              localStorage.setItem('user', JSON.stringify(user));
+            } else {
+              localStorage.setItem('user', null);
+            }
+          }
         );
       } else {
         localStorage.setItem('user', null);
@@ -43,19 +50,24 @@ export class AuthService {
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(credential => {
-        if (credential) {
+        this.afAuth.auth.currentUser.reload();
+
+        if (credential && credential.user.emailVerified) {
           this.userService.getUserById(credential.user.uid).subscribe(
             user => this.currentUserSubject.next(user));
+        } else {
+          // email not verfied
+          console.log('no verified email');
         }
       });
   }
 
   // Sign up with email/password
-  SignUp(data, sendEmail) {
+  SignUp(data) {
     const user = data as User;
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(credential => {
-        if (sendEmail) {
+        if (!credential.user.emailVerified) {
           this.SendVerificationMail();
         }
 

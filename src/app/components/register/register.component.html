@@ -25,13 +25,13 @@
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <button mdbBtn [disabled]="sending" class="bg-success" mdbWavesEffect
+        <button mdbBtn [disabled]="sending" class="bg-success text-white" mdbWavesEffect
             (click)="sendVerificationMail()">
           <i class="fas fa-sync-alt left" aria-hidden="true"></i>Resend email verification
           <i *ngIf="sending" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
         </button>
 
-        <button mdbBtn [disabled]="sending" class="bg-primary" mdbWavesEffect
+        <button mdbBtn [disabled]="sending" class="bg-primary text-white" mdbWavesEffect
             (click)="hideModal()">
 
           <i class="fas fa-ban left" aria-hidden="true"></i>Close
@@ -96,7 +96,7 @@
             <!-- Confirmation Password -->
             <div class="md-form form-sm mt-0 mb-0">
               <mdb-icon fas icon="redo-alt" class="prefix"></mdb-icon>
-              
+
               <input mdbInputDirective type="password" class="form-control"
                 id="formPasswordConfirmation" data-error="Confirmation password is required"
                 [validateSuccess]="false" formControlName="passwordConfirmation">
@@ -110,10 +110,11 @@
 
         <mdb-card-footer class="bg-white">
           <!-- Register -->
-          <button mdbBtn [disabled]="loading" type="submit" class="btn-block mt-2 btn-round-xs"
-              color="primary" outline="true" mdbWavesEffect (click)="createAccount()">
+          <button mdbBtn [disabled]="loading" class="btn-block mt-2 btn-round-xs"
+              type="submit" color="primary" outline="true"
+              mdbWavesEffect (click)="createAccount()">
 
-            <i class="fa fa-user-plus fa-sm left" aria-hidden="true"></i>register
+            <i class="fa fa-user-plus fa-sm left mr-2" aria-hidden="true"></i>register
             <i *ngIf="loading" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
           </button>
 

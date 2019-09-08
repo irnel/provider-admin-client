@@ -217,10 +217,9 @@ export class EditCashierWorkspaceComponent implements OnInit {
       };
 
       // create cashier
-      this.authService.SignUp(cashier, false).then(() => {
+      this.authService.SignUp(cashier).then(() => {
         this.redirectToCashierWorkspace();
-      })
-      .catch(error => {
+      }).catch(error => {
         this.loading = false;
 
         if (error.code === FirebaseCode.EMAIL_ALREADY_IN_USE) {
@@ -241,8 +240,7 @@ export class EditCashierWorkspaceComponent implements OnInit {
 
       this.userService.update(this.cashier).then(() => {
         this.redirectToCashierWorkspace();
-      })
-      .catch(error => {
+      }).catch(error => {
         this.loading = false;
 
         if (error.code === FirebaseCode.EMAIL_ALREADY_IN_USE) {
