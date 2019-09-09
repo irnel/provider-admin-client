@@ -30,11 +30,7 @@ export class AuthService {
       if (firebaseUser) {
         this.userService.getUserById(firebaseUser.uid).subscribe(
           user => {
-            if (user.emailVerified) {
-              localStorage.setItem('user', JSON.stringify(user));
-            } else {
-              localStorage.setItem('user', null);
-            }
+            localStorage.setItem('user', JSON.stringify(user));
           }
         );
       } else {
@@ -50,11 +46,10 @@ export class AuthService {
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(credential => {
-        this.afAuth.auth.currentUser.reload();
-
-        if (credential && credential.user.emailVerified) {
-          this.userService.getUserById(credential.user.uid).subscribe(
-            user => this.currentUserSubject.next(user));
+        if (credential) {
+          this.userService.getUserById(credential.user.uid).subscribe(user => {
+            this.currentUserSubject.next(user);
+          });
         } else {
           // email not verfied
           console.log('no verified email');
