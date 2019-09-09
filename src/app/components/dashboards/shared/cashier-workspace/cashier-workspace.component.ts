@@ -2,11 +2,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
+import { Observable } from 'rxjs';
 import { Config } from '../../../../infrastructure';
 import { User, Provider } from '../../../../models';
+import { Roles } from '../../../../helpers';
 import { UserService, NotificationService } from '../../../../services';
-import { Observable } from 'rxjs';
 import { ProviderService } from '../../../../services/provider/provider.service';
+
 
 @Component({
   selector: 'app-cashier-workspace',
@@ -22,13 +24,16 @@ export class CashierWorkspaceComponent implements OnInit {
 
   pageSizeOptions: number[] = Config.pageSizeOptions;
   observer$: Observable<any>;
+  user: User;
   provider: Provider;
   cashiers: User [];
   providerId: string;
   userRole: string;
+  userId: string;
   deleting = false;
   state = 'waiting';
   visibility = false;
+  isAdmin = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,8 +46,18 @@ export class CashierWorkspaceComponent implements OnInit {
 
   ngOnInit() {
     this.route.parent.data.subscribe(data => this.userRole = data.role);
-    this.providerId = this.route.snapshot.params['providerId'];
 
+     // Admin role
+    if (this.userRole === Roles.Admin) {
+      this.isAdmin = true;
+      this.userId = this.route.snapshot.params.userId;
+
+      this.userService.getUserById(this.userId).subscribe(
+        user => this.user = user
+      );
+    }
+
+    this.providerId = this.route.snapshot.params.providerId;
     this.providerService.getProviderById(this.providerId).subscribe(
       provider => this.provider = provider
     );

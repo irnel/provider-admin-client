@@ -12,6 +12,7 @@ import { ProviderService, AuthService, NotificationService, FileService } from '
 import { Config } from '../../../../../infrastructure';
 import { DayOfWeek } from '../../../../../helpers';
 import { Address, Provider, FileInfo, Schedule } from '../../../../../models';
+import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EditProviderWorkspaceComponent implements OnInit {
   availableHours: Schedule[] = [];
 
   // HTML values
-  @ViewChild('search', {static: false}) search: any;
+  @ViewChild('search', { static: false }) search: any;
+  @ViewChild('mondayOpeningTime', { static: false }) mOT: NgxMaterialTimepickerComponent;
   title: string;
   edit: boolean;
   test: string;
@@ -45,22 +47,6 @@ export class EditProviderWorkspaceComponent implements OnInit {
   mode: string;
   loading = false;
   state = 'waiting';
-
-  // Time Values
-  mondayOtValue: any;
-  mondayCtValue: any;
-  tuesdayOtValue: any;
-  tuesdayCtValue: any;
-  wednesdayOtValue: any;
-  wednesdayCtValue: any;
-  thursdayOtValue: any;
-  thursdayCtValue: any;
-  fridayOtValue: any;
-  fridayCtValue: any;
-  saturdayOtValue: any;
-  saturdayCtValue: any;
-  sundayOtValue: any;
-  sundayCtValue: any;
 
   constructor(
     private router: Router,
@@ -148,55 +134,55 @@ export class EditProviderWorkspaceComponent implements OnInit {
             this.address = this.provider.address;
             this.zoom = 12;
 
-            // time values
-            this.provider.availableHours.forEach(schedule => {
-              switch (schedule.dayOfWeek) {
-                case DayOfWeek.Monday:
-                  this.mondayOtValue = schedule.opening;
-                  this.mondayCtValue = schedule.closing;
-                  break;
-
-                case DayOfWeek.Tuesday:
-                    this.tuesdayOtValue = schedule.opening;
-                    this.tuesdayCtValue = schedule.closing;
-                    break;
-
-                case DayOfWeek.Wednesday:
-                    this.wednesdayOtValue = schedule.opening;
-                    this.wednesdayCtValue = schedule.closing;
-                    break;
-
-                case DayOfWeek.Thursday:
-                    this.thursdayOtValue = schedule.opening;
-                    this.thursdayCtValue = schedule.closing;
-                    break;
-
-                case DayOfWeek.Friday:
-                    this.fridayOtValue = schedule.opening;
-                    this.fridayCtValue = schedule.closing;
-                    break;
-
-                case DayOfWeek.Saturday:
-                    this.saturdayOtValue = schedule.opening;
-                    this.saturdayCtValue = schedule.closing;
-                    break;
-
-                case DayOfWeek.Sunday:
-                    this.sundayOtValue = schedule.opening;
-                    this.sundayCtValue = schedule.closing;
-                    break;
-
-                default:
-                  break;
-              }
-            });
-
             // updated Form Control values
             this.editForm.patchValue({
               name: this.provider.name,
               address: this.provider.address.formattedAddress,
               phone: this.provider.phone,
               description: this.provider.description
+            });
+
+            // time values
+            this.provider.availableHours.forEach(schedule => {
+              switch (schedule.dayOfWeek) {
+                case DayOfWeek.Monday:
+                  this.editForm.get('mondayOT').patchValue(schedule.opening);
+                  this.editForm.get('mondayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Tuesday:
+                  this.editForm.get('tuesdayOT').patchValue(schedule.opening);
+                  this.editForm.get('tuesdayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Wednesday:
+                  this.editForm.get('wednesdayOT').patchValue(schedule.opening);
+                  this.editForm.get('wednesdayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Thursday:
+                  this.editForm.get('thursdayOT').patchValue(schedule.opening);
+                  this.editForm.get('thursdayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Friday:
+                  this.editForm.get('fridayOT').patchValue(schedule.opening);
+                  this.editForm.get('fridayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Saturday:
+                  this.editForm.get('saturdayOT').patchValue(schedule.opening);
+                  this.editForm.get('saturdayCT').patchValue(schedule.closing);
+                  break;
+
+                case DayOfWeek.Sunday:
+                  this.editForm.get('sundayOT').patchValue(schedule.opening);
+                  this.editForm.get('sundayCT').patchValue(schedule.closing);
+                  break;
+
+                default:
+                  break;
+              }
             });
           },
           error => {
@@ -330,6 +316,8 @@ export class EditProviderWorkspaceComponent implements OnInit {
     if (this.availableHours.length === 0) {
       this.notification.ErrorMessage('You must select at least one day of the week', '');
       this.loading = false;
+
+      return;
     }
 
     // create
@@ -420,7 +408,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
 
   setAvailableHours() {
     // Monday
-    if (this.form.mondayOT.value !== null &&  this.form.mondayCT.value !== null) {
+    if (this.form.mondayOT.value !== '' &&  this.form.mondayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Monday,
         opening: this.form.mondayOT.value,
@@ -429,7 +417,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Tuesday
-    if (this.form.tuesdayOT.value !== null &&  this.form.tuesdayCT.value !== null) {
+    if (this.form.tuesdayOT.value !== '' &&  this.form.tuesdayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Tuesday,
         opening: this.form.tuesdayOT.value,
@@ -438,7 +426,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Wednesday
-    if (this.form.wednesdayOT.value !== null &&  this.form.wednesdayCT.value !== null) {
+    if (this.form.wednesdayOT.value !== '' &&  this.form.wednesdayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Wednesday,
         opening: this.form.wednesdayOT.value,
@@ -447,7 +435,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Thursday
-    if (this.form.thursdayOT.value !== null &&  this.form.thursdayCT.value !== null) {
+    if (this.form.thursdayOT.value !== '' &&  this.form.thursdayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Thursday,
         opening: this.form.thursdayOT.value,
@@ -456,7 +444,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Friday
-    if (this.form.fridayOT.value !== null &&  this.form.fridayCT.value !== null) {
+    if (this.form.fridayOT.value !== '' &&  this.form.fridayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Friday,
         opening: this.form.fridayOT.value,
@@ -465,7 +453,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Saturday
-    if (this.form.saturdayOT.value !== null &&  this.form.saturdayCT.value !== null) {
+    if (this.form.saturdayOT.value !== '' &&  this.form.saturdayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Saturday,
         opening: this.form.saturdayOT.value,
@@ -474,7 +462,7 @@ export class EditProviderWorkspaceComponent implements OnInit {
     }
 
     // Sunday
-    if (this.form.sundayOT.value !== null &&  this.form.sundayCT.value !== null) {
+    if (this.form.sundayOT.value !== '' &&  this.form.sundayCT.value !== '') {
       this.availableHours.push({
         dayOfWeek: DayOfWeek.Sunday,
         opening: this.form.sundayOT.value,

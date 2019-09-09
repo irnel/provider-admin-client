@@ -97,12 +97,12 @@ export class OrderDetailsWorkspaceComponent implements OnInit, IStatus {
     this.notification.SuccessMessage(
       `Status changed to ${this.order.status}`, '', 2500);
 
-    // this.orderService.update(this.order, this.date).then(
-    //   () => this.notification.SuccessMessage(
-    //     `Status changed to ${this.order.status}`, '', 2500)
-    // ).catch(error => {
-    //   this.notification.ErrorMessage(error.message, '', 2500);
-    // });
+    this.orderService.update(this.order, this.date).then(
+      () => this.notification.SuccessMessage(
+        `Status changed to ${this.order.status}`, '', 2500)
+    ).catch(error => {
+      this.notification.ErrorMessage(error.message, '', 2500);
+    });
   }
 
   previousStatus(value) {

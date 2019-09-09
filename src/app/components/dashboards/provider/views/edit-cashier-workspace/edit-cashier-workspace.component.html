@@ -2,7 +2,7 @@
 <mdb-card *ngIf="observer$ | async; else progress" id="header" class="w-responsive mt-3 center ml-auto mr-auto">
   <!-- Card Header -->
   <mdb-card-header class="px-lg-5">
-    <h3 class="text-center mt-1">
+    <h3 class="mt-1">
       <span class="badge badge-primary waves-light">{{title}}</span>
     </h3>
 
@@ -23,12 +23,10 @@
 
   <!--Card content-->
   <mdb-card-body class="px-lg-5">
-
     <form [formGroup]="editForm">
-
       <!-- Name -->
       <div class="md-form form-sm mt-1">
-        <i class="fa fa-user prefix" aria-hidden="true"></i>
+        <mdb-icon fas icon="user" class="prefix"></mdb-icon>
         <input mdbInputDirective type="text" class="form-control"
             id="formName" formControlName="name"
             [errorMessage]="nameError"
@@ -39,7 +37,7 @@
 
       <!-- Email -->
       <div class="md-form form-sm mt-0">
-        <i class="fa fa-envelope prefix" aria-hidden="true"></i>
+        <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
         <input mdbInputDirective type="email" class="form-control"
             id="formEmail" formControlName="email"
             [validateSuccess]="false"
@@ -50,20 +48,24 @@
 
       <!-- Password -->
       <div class="md-form form-sm mt-0">
-        <i class="fa fa-lock prefix" aria-hidden="true"></i>
+        <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
         <input mdbInputDirective type="password" class="form-control"
-          id="formPassword" data-error="password must be at least 6 character"
-          [validateSuccess]="false" minlength="6" formControlName="password">
+          id="formPassword" 
+          data-error="password must be at least 6 character"
+          [validateSuccess]="false" 
+          minlength="6" formControlName="password">
 
         <label for="formPassword">Password</label>
       </div>
 
       <!-- Confirmation Password -->
       <div class="md-form form-sm mt-0 mb-0">
-        <i class="fa fa-repeat prefix" aria-hidden="true"></i>
+        <mdb-icon fas icon="redo-alt" class="prefix"></mdb-icon>
         <input mdbInputDirective type="password" class="form-control"
-          id="formPasswordConfirmation" data-error="Confirmation password is required"
-          [validateSuccess]="false" formControlName="passwordConfirmation">
+          id="formPasswordConfirmation"
+          data-error="Confirmation password is required"
+          [validateSuccess]="false"
+          formControlName="passwordConfirmation">
 
         <label for="formPasswordConfirmation">Confirmation password</label>
       </div>
@@ -82,14 +84,14 @@
 
         <!-- Create Mode -->
         <div *ngIf="!edit" >
-          <i *ngIf="!loading" class="fa fa-plus left mr-2" aria-hidden="true"></i>Create
-          <i *ngIf="loading" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+          <i *ngIf="!loading" class="fas fa-plus left mr-2" aria-hidden="true"></i>Create
+          <i *ngIf="loading" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
         </div>
 
         <!-- Edit Mode -->
         <div *ngIf="edit">
-          <i *ngIf="!loading" class="fa fa-floppy-o left mr-2" aria-hidden="true"></i>Save
-          <i *ngIf="loading" class="fa fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
+          <i *ngIf="!loading" class="fas fa-save left mr-2" aria-hidden="true"></i>Save
+          <i *ngIf="loading" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
         </div>
 
       </button>
@@ -100,7 +102,7 @@
           aria-label="Close" mdbWavesEffect
           (click)="cancel()">
 
-        <i class="fa fa-ban left mr-2" aria-hidden="true"></i>Cancel
+        <i class="fas fa-ban left mr-2" aria-hidden="true"></i>Cancel
       </button>
     </div>
 

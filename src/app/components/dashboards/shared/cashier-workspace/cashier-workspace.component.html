@@ -6,9 +6,9 @@
       <div class="row">
         <!-- Breadcrumbs navigation -->
         <div class="col">
-          <h6 *ngIf="provider" class="h6-responsive ml-3 card-text font-1">
+          <h6 *ngIf="provider" class="h6-responsive pt-2 ml-3 card-text font-1">
             <!-- Provider -->
-            <div *ngIf="userRole ==='provider'">
+            <div *ngIf="!isAdmin">
               <i (click)="redirectToProviderHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
               <a routerLink="/provider-dashboard/workspace/home">Home</a>
               <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
             </div>
 
             <!-- Admin -->
-            <div *ngIf="userRole === 'admin'">
+            <div *ngIf="isAdmin">
               <i (click)="redirectToAdminHome()" class="fas fa-home prefix mr-2" aria-hidden="true"></i>
               <a routerLink="/admin-dashboard/workspace/home">Home</a>
               <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
@@ -107,8 +107,8 @@
                     placement="top"
                     class="waves-light mr-3 ml-3"
                     (click)="redirectToEditCashier(cashier.uid)">
-    
-                  <i class="fas fa-pencil prefix" style="color: #37474F" aria-hidden="true"></i>
+  
+                  <i class="fas fa-pen prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
                 <!-- Option Delete -->
                 <a *ngIf="!isAdmin" type="button"
@@ -116,7 +116,7 @@
                     placement="top"
                     class="relative waves-light"
                     (click)="frame.toggle()">
-    
+  
                   <i class="fas fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
     
