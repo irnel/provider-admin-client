@@ -34,7 +34,7 @@
               <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <span>Categories</span>
             </div>
-            
+
           </h6>
         </div>
 
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-        
+
     </mdb-card-header>
 
     <!-- Content -->
@@ -79,12 +79,12 @@
             <td mat-cell *matCellDef="let category"
                 style="width: 10%;"
                 (click)="redirectToCategoryDetails(category.id)">
-    
+
               <img src="{{category.url}}" alt="category" class="img-thumbnail mt-2 mb-2 mr-4 animated fadeIn">
             </td>
-    
+
           </ng-container>
-    
+
           <!-- Column Name -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
@@ -94,114 +94,114 @@
               <p class="ml-2">{{category.name}}</p>
             </td>
           </ng-container>
-        
+
           <!-- Column Description -->
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-            <td mat-cell *matCellDef="let category">
-    
-              <p *ngIf="category.description.length <= maxChar" class="ml-2">{{category.description}}</p>
-    
-              <div *ngIf="category.description.length > maxChar" class="ml-2">
+            <td mat-cell *matCellDef="let category" (click)="redirectToCategoryDetails(category.id)">
+
+              <p *ngIf="category.description.length <= maxChar" class="ml-2">{{ category.description }}</p>
+              <p *ngIf="category.description.length > maxChar" class="ml-2">{{ category.description.slice(0,130) }} ...</p>
+              <!-- <div *ngIf="category.description.length > maxChar" class="ml-2">
                 <p *ngIf="detail.isCollapsed">{{category.description.slice(0, 130)}} ...</p>
-    
+
                 <div #detail="bs-collapse" class="mt-2" mdbCollapse>
                   <p *ngIf="!detail.isCollapsed">{{category.description}}</p>
-                </div>
-    
+                </div> -->
+
                 <!-- Read More -->
-                <h6 *ngIf="detail.isCollapsed">
+                <!-- <h6 *ngIf="detail.isCollapsed">
                   <span (click)="detail.show()" class="badge badge-primary waves-light" mdbWavesEffect>
                     Read more
                   </span>
-                </h6>
-    
+                </h6> -->
+
                 <!-- Read less -->
-                <h6 *ngIf="!detail.isCollapsed">
+                <!-- <h6 *ngIf="!detail.isCollapsed">
                   <span (click)="detail.hide()" class="badge badge-primary waves-light" mdbWavesEffect>
                     Read less
                   </span>
                 </h6>
-    
-              </div>
+
+              </div> -->
             </td>
           </ng-container>
-    
+
           <!-- Column Operation -->
           <ng-container matColumnDef="operation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let category">
-    
+
               <!-- Options -->
               <div class="block-options">
                 <!-- Option Detail -->
                 <a type="button"
                     mdbTooltip="View details"
                     placement="top"
-                    class="waves-light ml-3"
+                    class="waves-light pl-2 pr-2"
                     (click)="redirectToCategoryDetails(category.id)">
-    
+
                   <i class="fas fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
                 <!-- Option Edit -->
                 <a *ngIf="!isAdmin" type="button"
                     mdbTooltip="Edit category"
                     placement="top"
-                    class="waves-light mr-3 ml-3"
+                    class="waves-light pl-2 pr-2"
                     (click)="redirectToEditCategory(category.id)">
-    
+
                   <i class="fas fa-pen prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
                 <!-- Option Delete -->
                 <a *ngIf="!isAdmin" type="button"
                     mdbTooltip="Delete category"
                     placement="top"
-                    class="relative waves-light"
+                    class="relative waves-light pl-2 pr-2"
                     (click)="frame.toggle()">
-    
+
                   <i class="fas fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
                 </a>
-    
+
                 <!-- Modal Form Delete -->
                 <div mdbModal #frame="mdbModal"
                     class="modal fade right modal-scrolling"
                     tabindex="-1" role="dialog" aria-labelledby="frameModalTop"
                     aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-    
+
                   <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
                     <div class="modal-content">
-    
+
                       <!-- Header -->
                       <div class="modal-header">
                         <p class="heading">
                           <strong>Delete category</strong>
                         </p>
-    
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                           <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
-    
+
                       </div>
                       <!-- Header -->
-    
+
                       <!-- Body -->
                       <div class="modal-body">
-    
+
                         <div class="row">
                           <div class="col-3">
                             <img src="{{category.url}}" alt="category" class="img-thumbnail">
                           </div>
-    
+
                           <div class="col-9">
                             <p>This action is irreversible and you will not be able to recover your category data.</p>
                             <p><strong>Are you sure you want to delete <b>{{category.name}}</b>?</strong></p>
                           </div>
-    
+
                         </div>
-    
+
                       </div>
                       <!-- Body -->
-    
+
                       <!-- Footer -->
                       <div class="modal-footer flex-center">
                         <!-- Button Delete -->
@@ -210,19 +210,19 @@
                             color="danger" rounded=" true"
                             class="relative waves-light" mdbWavesEffect
                             (click)="deleteCategory(category)">
-    
+
                           <i *ngIf="!deleting"class="fas fa-trash left mr-2" aria-hidden="true"></i>Delete
                           <i *ngIf="deleting" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
                         </button>
-    
+
                         <!-- Button Cancel -->
                         <button mdbBtn (click)="frame.hide()"
                             type="submit" outline="true" color="danger"
                             aria-label="Close" mdbWavesEffect>
-    
+
                           <i class="fa fa-ban left mr-2" aria-hidden="true"></i>Cancel
                         </button>
-    
+
                       </div>
                       <!-- Footer -->
                     </div>
@@ -230,18 +230,18 @@
                 </div>
                 <!-- Modal Form Delete -->
               </div>
-    
+
             </td>
           </ng-container>
-    
+
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
           <tr mat-row *matRowDef="let provider; columns: columnsToDisplay;"></tr>
-    
+
         </table>
         <!-- Table -->
-    
+
         <mat-paginator [pageSizeOptions]='pageSizeOptions' showFirstLastButtons></mat-paginator>
-    
+
       </div>
     </mdb-card-body>
 

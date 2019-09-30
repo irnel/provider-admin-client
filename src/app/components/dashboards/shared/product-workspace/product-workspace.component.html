@@ -44,7 +44,7 @@
               <i class="fas fa-caret-right prefix ml-1 mr-1" aria-hidden="true"></i>
               <span>Products</span>
             </div>
-            
+
           </h6>
         </div>
 
@@ -72,13 +72,13 @@
         </div>
       </div>
     </mdb-card-header>
-    
+
     <!-- Content -->
     <mdb-card-body>
       <h6 *ngIf="products.length === 0" class="h6-responsive text-center">
         <p class="font-italic tc-custom">No products found.</p>
       </h6>
-  
+
       <div *ngIf="products.length > 0">
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- Column Image -->
@@ -87,12 +87,12 @@
             <td mat-cell *matCellDef="let product"
                 style="width: 10%;"
                 (click)="redirectToProductDetails(product.id)">
-  
+
               <img src="{{product.url}}" alt="product" class="img-thumbnail mt-2 mb-2 mr-4 animated fadeIn">
             </td>
-  
+
           </ng-container>
-    
+
           <!-- Column Name -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
@@ -102,7 +102,7 @@
               <p class="ml-2">{{product.name}}</p>
             </td>
           </ng-container>
-        
+
           <!-- Column Price -->
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
@@ -112,39 +112,40 @@
               <p class="ml-2">{{product.price}}$</p>
             </td>
           </ng-container>
-    
+
           <!-- Column Description -->
           <ng-container matColumnDef="description">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-              <td mat-cell *matCellDef="let product">
-    
-                <p *ngIf="product.description.length <= maxChar" class="ml-2">{{product.description}}</p>
-    
-                <div *ngIf="product.description.length > maxChar" class="ml-2">
+              <td mat-cell *matCellDef="let product" (click)="redirectToProductDetails(product.id)">
+
+                <p *ngIf="product.description.length <= maxChar" class="ml-2">{{ product.description }}</p>
+                <p *ngIf="product.description.length > maxChar" class="ml-2">{{ product.description.slice(0, 130) }} ...</p>
+
+                <!-- <div *ngIf="product.description.length > maxChar" class="ml-2">
                   <p *ngIf="detail.isCollapsed">{{product.description.slice(0, 130)}} ...</p>
-    
+
                   <div #detail="bs-collapse" class="mt-2" mdbCollapse>
                     <p *ngIf="!detail.isCollapsed">{{product.description}}</p>
-                  </div>
-    
+                  </div> -->
+
                   <!-- Read More -->
-                  <h6 *ngIf="detail.isCollapsed">
+                  <!-- <h6 *ngIf="detail.isCollapsed">
                     <span (click)="detail.show()" class="badge badge-primary waves-light" mdbWavesEffect>
                       Read more
                     </span>
-                  </h6>
-    
+                  </h6> -->
+
                   <!-- Read less -->
-                  <h6 *ngIf="!detail.isCollapsed">
+                  <!-- <h6 *ngIf="!detail.isCollapsed">
                     <span (click)="detail.hide()" class="badge badge-primary waves-light" mdbWavesEffect>
                       Read less
                     </span>
                   </h6>
-    
-                </div>
+
+                </div> -->
               </td>
             </ng-container>
-    
+
             <!-- Column Operation -->
             <ng-container matColumnDef="operation">
               <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
@@ -155,70 +156,70 @@
                   <a type="button"
                       mdbTooltip="View details"
                       placement="top"
-                      class="waves-light ml-3"
+                      class="waves-light pl-2 pr-2"
                       (click)="redirectToProductDetails(product.id)">
-    
+
                     <i class="fas fa-info-circle prefix" style="color: #37474F" aria-hidden="true"></i>
                   </a>
                   <!-- Option Edit -->
                   <a *ngIf="!isAdmin" type="button"
                       mdbTooltip="Edit product"
                       placement="top"
-                      class="waves-light ml-3 mr-3"
+                      class="waves-light pl-2 pr-2"
                       (click)="redirectToEditProduct(product.id)">
-    
+
                     <i class="fas fa-pen prefix" style="color: #37474F" aria-hidden="true"></i>
                   </a>
                   <!-- Option Delete -->
                   <a *ngIf="!isAdmin" type="button"
                       mdbTooltip="Delete product"
                       placement="top"
-                      class="relative waves-light"
+                      class="relative waves-light pl-2 pr-2"
                       (click)="frame.toggle()">
-    
+
                     <i class="fas fa-trash prefix" style="color: #37474F" aria-hidden="true"></i>
                   </a>
-    
+
                   <!-- Modal Form Delete -->
                   <div mdbModal #frame="mdbModal"
                       class="modal fade right modal-scrolling"
                       tabindex="-1" role="dialog" aria-labelledby="frameModalTop"
                       aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-    
+
                     <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
                       <div class="modal-content">
-    
+
                         <!-- Header -->
                         <div class="modal-header">
                           <p class="heading">
                             <strong>Delete product</strong>
                           </p>
-    
+
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                             <span aria-hidden="true" class="white-text">&times;</span>
                           </button>
-    
+
                         </div>
                         <!-- Header -->
-    
+
                         <!-- Body -->
                         <div class="modal-body">
-    
+
                           <div class="row">
                             <div class="col-3">
                               <img src="{{product.url}}" alt="product" class="img-thumbnail">
                             </div>
-    
+
                             <div class="col-9">
                               <p>This action is irreversible and you will not be able to recover your product data.</p>
                               <p><strong>Are you sure you want to delete <b>{{product.name}}</b>?</strong></p>
                             </div>
-    
+
                           </div>
-    
+
                         </div>
                         <!-- Body -->
-    
+
                         <!-- Footer -->
                         <div class="modal-footer flex-center">
                           <!-- Button Delete -->
@@ -226,19 +227,19 @@
                               [disabled]="deleting"
                               class="relative waves-light" mdbWavesEffect
                               (click)="deleteProduct(product)">
-    
+
                             <i *ngIf="!deleting"class="fas fa-trash left mr-2" aria-hidden="true"></i>Delete
                             <i *ngIf="deleting" class="fas fa-spinner fa-pulse ml-2" aria-hidden="true"></i>
                           </button>
-    
+
                           <!-- Button Cancel -->
                           <button mdbBtn (click)="frame.hide()"
                               type="submit" outline="true" color="danger" data-dismiss="modal"
                               aria-label="Close" mdbWavesEffect>
-    
+
                             <i class="fas fa-ban left mr-2" aria-hidden="true"></i>Cancel
                           </button>
-    
+
                         </div>
                         <!-- Footer -->
                       </div>
@@ -246,21 +247,21 @@
                   </div>
                   <!-- Modal Form Delete -->
                 </div>
-    
+
               </td>
             </ng-container>
-    
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let product; columns: displayedColumns;"></tr>
         </table>
-    
+
         <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
       </div>
-        
+
     </mdb-card-body>
 
   </mdb-card>
-    
+
   <!-- Floating Action Button -->
   <a *ngIf="!isAdmin" routerLink="create" type="button" mat-fab class="pink mat-elevation-z8">
     <i class="material-icons">add</i>
