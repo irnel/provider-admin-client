@@ -11,7 +11,7 @@ import { NotificationService } from '../../../../../services';
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit {
-  @Output() files = new EventEmitter<FileInfo []>();
+  @Output() localFiles = new EventEmitter<FileInfo []>();
   @Input() model: any;
   @Input() serverFiles$: Observable<any>;
   @Input() progress$: Observable<number>;
@@ -84,7 +84,7 @@ export class GalleryComponent implements OnInit {
         }
 
         // event send fileInfo data
-        this.files.emit(this.selectedFiles);
+        this.localFiles.emit(this.selectedFiles);
       });
 
       reader.readAsDataURL(file);
@@ -104,12 +104,12 @@ export class GalleryComponent implements OnInit {
       const newIndex = this.selectedFiles.findIndex(f => f.name === image.name);
       this.selectedFiles[newIndex].markAsPrincipal = true;
 
-      this.files.emit(this.selectedFiles);
+      this.localFiles.emit(this.selectedFiles);
     } else {
       this.clicked = true;
       this.fileService.updateFileInfo(image, this.model).then(() => {
         this.clicked = false;
-        this.files.emit(this.selectedFiles);
+        this.localFiles.emit(this.selectedFiles);
       })
       .catch(error => {
         this.clicked = false;
@@ -131,12 +131,12 @@ export class GalleryComponent implements OnInit {
       const index = this.selectedFiles.findIndex(f => f.name === image.name);
       this.selectedFiles.splice(index, 1);
 
-      this.files.emit(this.selectedFiles);
+      this.localFiles.emit(this.selectedFiles);
     } else {
       this.clicked = true;
       this.fileService.removeFileInfo(image).then(() => {
         this.clicked = false;
-        this.files.emit(this.selectedFiles);
+        this.localFiles.emit(this.selectedFiles);
       })
       .catch(error => {
         this.clicked = false;

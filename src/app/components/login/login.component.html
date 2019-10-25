@@ -1,5 +1,5 @@
-<!-- Send Notification Email -->
-<div mdbModal #frame="mdbModal" class="modal fade top "
+<!-- Forgot Password Notification Email -->
+<div mdbModal #frameForgotPassword="mdbModal" class="modal fade top "
     id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     [config]="{backdrop: true, ignoreBackdropClick: false}" aria-hidden="true">
 
@@ -11,7 +11,7 @@
         <h3 class="heading">Forgot Password</h3>
 
         <button type="button" [disabled]="sending" class="close" data-dismiss="modal"
-            aria-label="Close" (click)="hideModal()">
+            aria-label="Close" (click)="hideModalForgotPassword()">
 
           <span aria-hidden="true" class="white-text">×</span>
         </button>
@@ -41,6 +41,57 @@
           <i class="fas fa-sync-alt left" aria-hidden="true"></i>Reset Password
           <i *ngIf="sending" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
         </button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+<!-- Activation Account  Notification Email -->
+<div mdbModal #frameActivationAccount="mdbModal" class="modal fade top "
+    id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    [config]="{backdrop: true, ignoreBackdropClick: true}" aria-hidden="true">
+
+  <div class="modal-dialog modal-xs modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <h3 class="heading">Activation Account</h3>
+
+        <button type="button" [disabled]="sending" class="close" data-dismiss="modal"
+            aria-label="Close" (click)="hideModalActivationAccount()">
+
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+          <p>
+            You are viewing this message because you have not activated your account.
+            We send you an account activation email, if you still do not keep it in your inbox,
+            you can send it again by pressing <strong>RESEND EMAIL VERIFICATION</strong> button below.
+          </p>
+
+          <p>Please check your email and click on the link to verify your email address.</p>
+          <p><strong>Thanks.</strong></p>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <button mdbBtn [disabled]="sending" class="bg-success text-white" mdbWavesEffect
+            (click)="sendVerificationMail()">
+          <i class="fas fa-sync-alt left" aria-hidden="true"></i>Resend email verification
+          <i *ngIf="sending" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
+        </button>
+
+        <button mdbBtn [disabled]="sending" class="bg-primary text-white" mdbWavesEffect
+            (click)="hideModalActivationAccount()">
+
+          <i class="fas fa-ban left" aria-hidden="true"></i>Close
+        </button>
+
       </div>
     </div>
     <!--/.Content-->
@@ -86,7 +137,7 @@
             <div class="d-flex justify-content-around font-small">
               <div>
                 <!-- Forgot password -->
-                <a (click)="showModal()" routerLinkActive="active" class="text-primary">
+                <a (click)="showModalForgotPassword()" routerLinkActive="active" class="text-primary">
                   Forgot password?
                 </a>
               </div>

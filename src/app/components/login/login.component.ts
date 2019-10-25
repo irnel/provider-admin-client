@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
   emailError: string;
   resetEmailError: string;
 
-  @ViewChild('frame', {static: true}) frame: ElementRef;
+  @ViewChild('frameForgotPassword', {static: true}) frameForgotPassword: ElementRef;
+  @ViewChild('frameActivationAccount', {static: true}) frameActivationAccount: ElementRef;
 
   constructor(
     private router: Router,
@@ -121,9 +122,15 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.authService.SignIn(this.form.email.value, this.form.password.value)
-      .then(() => {
+      .then(accountVerified => {
         this.loading = false;
         this.clicked = false;
+
+        if (!accountVerified) {
+          this.showModalActivationAccount();
+
+          return;
+        }
 
         this.ngZone.run(() => {
           this.router.navigate([this.returnUrl]);
@@ -176,7 +183,7 @@ export class LoginComponent implements OnInit {
     const email = this.formReset.resetEmail.value;
     this.authService.ForgotPassword(email).then(() => {
       this.sending = false;
-      this.hideModal();
+      this.hideModalForgotPassword();
 
       this.notification.SuccessMessage(
         `forgot password sent email to ${email}`, '', 2500);
@@ -186,16 +193,41 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  showModal() {
+  sendVerificationMail() {
+    this.sending = true;
+    this.authService.SendVerificationMail().then(() => {
+      this.sending = false;
+      this.hideModalActivationAccount();
+
+      this.notification.SuccessMessage(
+        `Verification email sent to ${this.form.email.value}`, '');
+    })
+    .catch(error => {
+      this.notification.ErrorMessage(error.message, '', 2500);
+    });
+  }
+
+  showModalForgotPassword() {
     this.formReset.resetEmail.reset('');
 
-    const modal = this.render.selectRootElement(this.frame);
+    const modal = this.render.selectRootElement(this.frameForgotPassword);
     modal.show();
 
   }
 
-  hideModal() {
-    const modal = this.render.selectRootElement(this.frame);
+  hideModalForgotPassword() {
+    const modal = this.render.selectRootElement(this.frameForgotPassword);
+    modal.hide();
+  }
+
+  showModalActivationAccount() {
+    const modal = this.render.selectRootElement(this.frameActivationAccount);
+    modal.show();
+
+  }
+
+  hideModalActivationAccount() {
+    const modal = this.render.selectRootElement(this.frameActivationAccount);
     modal.hide();
   }
 }

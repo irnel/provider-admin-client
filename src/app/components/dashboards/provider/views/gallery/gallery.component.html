@@ -10,8 +10,8 @@
     <!-- Card -->
     <mdb-card>
       <!-- Image -->
-      <img *ngIf="image.file" class="img-fluid card-img-top z-depth-1" src="{{image.src}}" alt="image">
-      <img *ngIf="!image.file" class="img-fluid card-img-top z-depth-1" src="{{image.url}}" alt="image">
+      <img *ngIf="image.file" class="img-fluid card-img-top z-depth-1" src="{{ image.src }}" alt="image">
+      <img *ngIf="!image.file" class="img-fluid card-img-top z-depth-1" src="{{ image.url }}" alt="image">
       <!-- Footer -->
       <mdb-card-footer *ngIf="!uploading" class="text-center">
         <!-- principal -->
@@ -28,7 +28,7 @@
           style="color: #37474F"
           (click)="removeImage(image)">
         </i>
-        
+
       </mdb-card-footer>
 
     </mdb-card>
@@ -48,7 +48,7 @@
   </a>
 
   <p *ngIf="extensionError">
-    Invalid extension for file <strong>{{fileName}}</strong>.
+    Invalid extension for file <strong>{{ fileName }}</strong>.
     Only <strong>"jpg, jpeg, gif, png"</strong> files are supported.
   </p>
 
@@ -64,7 +64,7 @@
     (change)="onSelectFile($event)">
 
 <div *ngIf="progress$" class="text-center mt-2">
-  <small>Uploading images: {{progress$ | async}}%</small>
+  <small>Uploading images: {{ progress$ | async }}%</small>
 </div>
 <div *ngIf="progress$" class="progress">
   <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
@@ -82,7 +82,7 @@
     aria-label="Close" mdbWavesEffect
     (click)="fileInput.click()">
 
-  <i class="fa fa-picture-o mr-2" aria-hidden="true"></i>Select files ...
+  <i class="fa fa-picture-o mr-2" aria-hidden="true"></i>Select Images ...
 </button>
 
 
