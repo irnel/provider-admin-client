@@ -62,8 +62,8 @@
         </div>
 
         <!-- Gallery component -->
-      <app-gallery 
-        (files)="onSelectedFiles($event)"
+      <app-gallery
+        (localFiles)="onSelectedFiles($event)"
         [serverFiles$]="serverFiles$"
         [progress$]="allPercentage"
         [uploading]="loading"

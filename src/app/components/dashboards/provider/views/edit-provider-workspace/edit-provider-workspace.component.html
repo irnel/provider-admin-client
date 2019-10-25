@@ -94,13 +94,13 @@
                       aria-label="default time"
                       [ngxTimepicker]="mondayOpeningTime"
                       formControlName="mondayOT" readonly>
-                      
+
                   <ngx-material-timepicker #mondayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" 
+                  <input matInput placeholder="closing time"
                       aria-label="default time"
                       [ngxTimepicker]="mondayClosingTime"
                       formControlName="mondayCT" readonly>
@@ -114,7 +114,7 @@
               <td class="align-middle">Tuesday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" 
+                  <input matInput placeholder="opening time"
                       aria-label="default time"
                       [ngxTimepicker]="tuesdayOpeningTime"
                       formControlName="tuesdayOT" readonly>
@@ -124,7 +124,7 @@
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" 
+                  <input matInput placeholder="closing time"
                       aria-label="default time"
                       [ngxTimepicker]="tuesdayClosingTime"
                       formControlName="tuesdayCT" readonly>
@@ -162,7 +162,7 @@
               <td class="align-middle">Thursday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" 
+                  <input matInput placeholder="opening time"
                       aria-label="default time"
                       [ngxTimepicker]="thursdayOpeningTime"
                       formControlName="thursdayOT" readonly>
@@ -174,7 +174,7 @@
                 <mat-form-field>
                   <input matInput placeholder="closing time"
                       aria-label="default time"
-                      [ngxTimepicker]="thursdayClosingTime" 
+                      [ngxTimepicker]="thursdayClosingTime"
                       formControlName="thursdayCT" readonly>
 
                   <ngx-material-timepicker #thursdayClosingTime></ngx-material-timepicker>
@@ -200,7 +200,7 @@
                       aria-label="default time"
                       [ngxTimepicker]="fridayClosingTime"
                       formControlName="fridayCT" readonly>
-                      
+
                   <ngx-material-timepicker #fridayClosingTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
@@ -210,17 +210,17 @@
               <td class="align-middle">Saturday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" 
+                  <input matInput placeholder="opening time"
                       aria-label="default time"
-                      [ngxTimepicker]="saturdayOpeningTime" 
+                      [ngxTimepicker]="saturdayOpeningTime"
                       formControlName="saturdayOT" readonly>
-                      
+
                   <ngx-material-timepicker #saturdayOpeningTime></ngx-material-timepicker>
                 </mat-form-field>
               </td>
                 <td>
                   <mat-form-field>
-                    <input matInput placeholder="closing time" 
+                    <input matInput placeholder="closing time"
                         aria-label="default time"
                         [ngxTimepicker]="saturdayClosingTime"
                         formControlName="saturdayCT" readonly>
@@ -234,9 +234,9 @@
               <td class="align-middle">Sunday</td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="opening time" 
+                  <input matInput placeholder="opening time"
                       aria-label="default time"
-                      [ngxTimepicker]="sundayOpeningTime" 
+                      [ngxTimepicker]="sundayOpeningTime"
                       formControlName="sundayOT" readonly>
 
                   <ngx-material-timepicker #sundayOpeningTime></ngx-material-timepicker>
@@ -244,7 +244,7 @@
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput placeholder="closing time" 
+                  <input matInput placeholder="closing time"
                       aria-label="default time"
                       [ngxTimepicker]="sundayClosingTime"
                       formControlName="sundayCT" readonly>
@@ -253,14 +253,14 @@
                 </mat-form-field>
               </td>
             </tr>
-                                    
+
           </tbody>
         </table>
 
         <!-- <h6 class="h6-responsive">
           <p class="font-italic tc-custom">No schedule has been selected</p>
         </h6> -->
-                        
+
       </div>
 
       <!-- Description -->
@@ -274,8 +274,8 @@
       </div>
 
       <!-- Gallery component -->
-      <app-gallery 
-        (files)="onSelectedFiles($event)"
+      <app-gallery
+        (localFiles)="onSelectedFiles($event)"
         [serverFiles$]="serverFiles$"
         [model]="provider"
         [progress$]="allPercentage"
