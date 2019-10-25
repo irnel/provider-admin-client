@@ -26,8 +26,10 @@ export class AuthService {
      /* Saving user data in local storage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(firebaseUser => {
-      console.log('Auth state');
+      firebaseUser.reload();
+
       if (firebaseUser) {
+        // Save user data in Local Storage
         this.userService.getUserById(firebaseUser.uid).subscribe(
           user => {
             localStorage.setItem('user', JSON.stringify(user));
@@ -44,17 +46,23 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(credential => {
-        if (credential) {
-          this.userService.getUserById(credential.user.uid).subscribe(user => {
-            this.currentUserSubject.next(user);
-          });
-        } else {
-          // email not verfied
-          console.log('no verified email');
-        }
-      });
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(credential => {
+      if (credential.user.emailVerified) {
+        this.userService.getUserById(credential.user.uid).subscribe(user => {
+          // update emailVerified and password
+          user.emailVerified = credential.user.emailVerified;
+          this.SetUserData(user);
+
+          this.currentUserSubject.next(user);
+        });
+
+        return true;
+
+      } else {
+        // email not verified
+        return false;
+      }
+    });
   }
 
   // Sign up with email/password
@@ -62,13 +70,14 @@ export class AuthService {
     const user = data as User;
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(credential => {
-        if (!credential.user.emailVerified) {
+        if (credential) {
           this.SendVerificationMail();
         }
 
         // update data
         user.emailVerified = credential.user.emailVerified;
         user.refreshToken = credential.user.refreshToken;
+        user.photoURL = credential.user.photoURL;
         user.uid = credential.user.uid;
 
         this.SetUserData(user);
