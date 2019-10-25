@@ -129,7 +129,7 @@ export class FileService {
 
     switch (file.modelType) {
       case 'providers': {
-        modelDoc = this.afs.doc(`providers/${model.userId}/list/${model.id}`);
+        modelDoc = this.afs.doc(`providers/${model.id}`);
         break;
       }
       case 'categories': {
