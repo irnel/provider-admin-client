@@ -8,5 +8,6 @@ export * from './converter';
 export * from './file-info';
 export * from './data-transfer';
 export * from './firebase-code';
+export * from './firebase-error';
 export * from './status';
 export * from './day-of-week.enum';
