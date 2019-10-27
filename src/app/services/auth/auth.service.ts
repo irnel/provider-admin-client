@@ -8,6 +8,7 @@ import { User } from '../../models';
 import { NotificationService } from '../notification/notification.service';
 import { UserService } from '../user/user.service';
 import { Roles } from '../../helpers/enum-roles';
+import { FirebaseError } from '../../helpers/firebase-error';
 
 @Injectable({
   providedIn: 'root'
@@ -67,18 +68,24 @@ export class AuthService {
 
   // Sign up with email/password
   SignUp(data) {
-    const user = data as User;
-    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+    return this.afAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then(credential => {
-        if (credential) {
-          this.SendVerificationMail();
-        }
+        this.SendVerificationMail();
 
         // update data
-        user.emailVerified = credential.user.emailVerified;
-        user.refreshToken = credential.user.refreshToken;
-        user.photoURL = credential.user.photoURL;
-        user.uid = credential.user.uid;
+        const user: User = {
+          displayName: data.displayName,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          password: data.password,
+          photoURL: credential.user.photoURL,
+          publish: data.publish,
+          emailVerified: credential.user.emailVerified,
+          refreshToken: credential.user.refreshToken,
+          roles: data.roles,
+          parentId: data.parentId,
+          uid: credential.user.uid
+        };
 
         this.SetUserData(user);
         return user;
@@ -104,9 +111,6 @@ export class AuthService {
 
         this.SetUserData(user);
         this.currentUserSubject.next(user);
-      })
-      .catch(error => {
-        this.notificationService.ErrorMessage(error.message, '', 2500);
       });
   }
 
@@ -115,11 +119,20 @@ export class AuthService {
     return this.afAuth.auth.currentUser.sendEmailVerification();
   }
 
-  // Reset Forgot password
-  ForgotPassword(email) {
+  // Verify if the action code has expired or is valid.
+  VerifyEmailAddress(oobCode) {
+    return this.afAuth.auth.applyActionCode(oobCode);
+  }
+
+  // Send email for reset password
+  SendPasswordResetEmail(email) {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
+  // Reset password
+  ConfirmPasswordReset(oobCode, newPassword) {
+    return this.afAuth.auth.confirmPasswordReset(oobCode, newPassword);
+  }
 
   /* Setting up user data when sign in with username/password,
   sign up with username/password and sign in with social auth

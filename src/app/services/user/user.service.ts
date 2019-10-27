@@ -115,8 +115,12 @@ export class UserService {
     return this.usersCollection.doc(user.uid).update(user);
   }
 
+  updatePassword(uid, newPassword) {
+    return this.usersCollection.doc(uid).update({ password: newPassword });
+  }
+
   publish(userId, publish) {
-    return this.usersCollection.doc(userId).update({ publish: publish });
+    return this.usersCollection.doc(userId).update({ publish });
   }
 
   delete(id) {
