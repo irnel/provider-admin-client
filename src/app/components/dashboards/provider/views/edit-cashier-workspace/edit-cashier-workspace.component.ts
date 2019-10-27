@@ -6,9 +6,9 @@ import { startWith, map, tap } from 'rxjs/operators';
 import { Config } from './../../../../../infrastructure';
 import { Provider, User } from '../../../../../models';
 import { ProviderService, UserService, NotificationService, AuthService } from '../../../../../services';
-import { Roles, FirebaseCode } from '../../../../../helpers';
+import { Roles, FirebaseError } from '../../../../../helpers';
 import { Observable } from 'rxjs';
-import { error } from '@angular/compiler/src/util';
+
 
 @Component({
   selector: 'app-edit-cashier-workspace',
@@ -19,7 +19,6 @@ export class EditCashierWorkspaceComponent implements OnInit {
   editForm: FormGroup;
   title: string;
   edit: boolean;
-  msg: string;
 
   regEx = Config.regex[0];
   nameError: string;
@@ -65,15 +64,15 @@ export class EditCashierWorkspaceComponent implements OnInit {
     }, { validator: this.passwordMatchValidator });
 
      // Change Form values
-     this.route.parent.data.subscribe(data => this.userRole = data.role);
+    this.route.parent.data.subscribe(data => this.userRole = data.role);
 
-     this.route.data.subscribe(data => {
-      this.providerId = this.route.snapshot.params['providerId'];
+    this.route.data.subscribe(data => {
+      this.providerId = this.route.snapshot.params.providerId;
       this.mode = data.mode;
 
       // Admin role
       if (this.userRole === Roles.Admin) {
-        this.userId = this.route.snapshot.params['userId'];
+        this.userId = this.route.snapshot.params.userId;
       } else {
         this.userId = this.authService.currentUserValue.uid;
       }
@@ -87,7 +86,7 @@ export class EditCashierWorkspaceComponent implements OnInit {
         );
 
         // update form if mode is edit
-        const cashierId = this.route.snapshot.params['cashierId'];
+        const cashierId = this.route.snapshot.params.cashierId;
         this.observer$ = this.userService.getUserById(cashierId).pipe(
           tap(cashier => {
             this.cashier = cashier;
@@ -165,8 +164,6 @@ export class EditCashierWorkspaceComponent implements OnInit {
   }
 
   redirectToCashierWorkspace() {
-    this.notification.SuccessMessage(this.msg, '', 2500);
-
     this.ngZone.run(() => {
       this.router.navigate([
         `/provider-dashboard/workspace/providers/${this.providerId}/cashiers`
@@ -184,7 +181,6 @@ export class EditCashierWorkspaceComponent implements OnInit {
 
   editCashier() {
     this.loading = true;
-    let errorMsg = '';
 
     // Mark the control as dirty
     if (this.editForm.invalid) {
@@ -203,11 +199,10 @@ export class EditCashierWorkspaceComponent implements OnInit {
     }
 
     if (!this.edit) {
-      this.msg = 'New cashier created';
-
       const cashier = {
         displayName: this.form.name.value,
         email: this.form.email.value,
+        phoneNumber: null,
         password: this.form.password.value,
         emailVerified: true,
         publish: false,
@@ -218,38 +213,27 @@ export class EditCashierWorkspaceComponent implements OnInit {
 
       // create cashier
       this.authService.SignUp(cashier).then(() => {
+        this.notification.SuccessMessage('New cashier created', '');
         this.redirectToCashierWorkspace();
       }).catch(error => {
         this.loading = false;
-
-        if (error.code === FirebaseCode.EMAIL_ALREADY_IN_USE) {
-          errorMsg = 'The email address is already in use by another cashier.';
-        } else {
-          errorMsg = error.message;
-        }
-
-        this.notification.ErrorMessage(error.message, '', 2500);
+        this.notification.ErrorMessage(
+          FirebaseError.Parse(error.code), '');
       });
 
     } else {
-      this.msg = 'cashier edited';
-
       this.cashier.displayName = this.form.name.value;
       this.cashier.email = this.form.email.value;
       this.cashier.password = this.form.password.value;
 
       this.userService.update(this.cashier).then(() => {
+        this.notification.SuccessMessage('Cashier edited', '');
         this.redirectToCashierWorkspace();
       }).catch(error => {
         this.loading = false;
 
-        if (error.code === FirebaseCode.EMAIL_ALREADY_IN_USE) {
-          errorMsg = 'The email address is already in use by another cashier.';
-        } else {
-          errorMsg = error.message;
-        }
-
-        this.notification.ErrorMessage(error.message, '', 2500);
+        this.notification.ErrorMessage(
+          FirebaseError.Parse(error.code), '');
       });
     }
   }

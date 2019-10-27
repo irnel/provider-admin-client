@@ -5,8 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService, NotificationService } from '../../services';
-import { FirebaseCode } from '../../helpers/firebase-code';
-import { Roles } from '../../helpers';
+import { Roles, FirebaseError } from '../../helpers';
 
 @Component({
   selector: 'app-login',
@@ -67,7 +66,7 @@ export class LoginComponent implements OnInit {
     });
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
     // validate email
     this.form.email.valueChanges.pipe(
@@ -137,19 +136,11 @@ export class LoginComponent implements OnInit {
         });
       })
       .catch(error => {
-        let msg: string;
         this.loading = false;
         this.clicked = false;
 
-        if (error.code === FirebaseCode.USER_NOT_FOUND ||
-            error.code === FirebaseCode.WRONG_PASSWORD) {
-
-          msg = 'Invalid username and password.';
-        } else {
-          msg = error.message;
-        }
-
-        this.notification.ErrorMessage(msg, '', 2500);
+        this.notification.ErrorMessage(
+          FirebaseError.Parse(error.code), '', 2500);
       });
   }
 
@@ -168,7 +159,8 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       this.clicked = false;
 
-      this.notification.ErrorMessage(error.message, '');
+      this.notification.ErrorMessage(
+        FirebaseError.Parse(error.code), '', 2500);
     });
   }
 
@@ -181,7 +173,7 @@ export class LoginComponent implements OnInit {
 
     this.sending = true;
     const email = this.formReset.resetEmail.value;
-    this.authService.ForgotPassword(email).then(() => {
+    this.authService.SendPasswordResetEmail(email).then(() => {
       this.sending = false;
       this.hideModalForgotPassword();
 
@@ -189,7 +181,8 @@ export class LoginComponent implements OnInit {
         `forgot password sent email to ${email}`, '', 2500);
     })
     .catch(error => {
-       this.notification.ErrorMessage(error.message, '', 2500);
+      this.notification.ErrorMessage(
+        FirebaseError.Parse(error.code), '', 2500);
     });
   }
 
@@ -203,7 +196,8 @@ export class LoginComponent implements OnInit {
         `Verification email sent to ${this.form.email.value}`, '');
     })
     .catch(error => {
-      this.notification.ErrorMessage(error.message, '', 2500);
+      this.notification.ErrorMessage(
+        FirebaseError.Parse(error.code), '', 2500);
     });
   }
 

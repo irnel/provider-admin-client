@@ -6,8 +6,7 @@ import { startWith, map } from 'rxjs/operators';
 
 import { AuthService, NotificationService } from '../../services';
 import { Config } from '../../infrastructure';
-import { Roles } from '../../helpers/enum-roles';
-import { FirebaseCode } from '../../helpers/firebase-code';
+import { Roles, FirebaseError } from '../../helpers';
 
 @Component({
   selector: 'app-register',
@@ -44,9 +43,11 @@ export class RegisterComponent implements OnInit {
               // redirect to admin dashboard
               this.router.navigate(['/admin-dashboard/workspace/home']);
             } else if (rol === Roles.Provider) {
+              // redirect to provider dashboard
               this.router.navigate(['/provider-dashboard/workspace/home']);
             } else {
               // redirect to cashier dashboard
+              this.router.navigate(['/cashier-dashboard/workspace/home']);
             }
           });
         }
@@ -134,6 +135,7 @@ export class RegisterComponent implements OnInit {
     const data = {
       displayName: this.form.fullName.value,
       email: this.form.email.value,
+      phoneNumber: null,
       password: this.form.password.value,
       publish: false,
       roles: [Roles.Provider],
@@ -144,17 +146,11 @@ export class RegisterComponent implements OnInit {
       this.loading = false;
       this.email = user.email;
       this.showModal();
-    }).catch(error => {
-      let msg: string;
+    })
+    .catch(error => {
       this.loading = false;
-
-      if (error.code === FirebaseCode.EMAIL_ALREADY_IN_USE) {
-        msg = 'The email address is already in use by another account.';
-      } else {
-        msg = error.message;
-      }
-
-      this.notificationService.ErrorMessage(msg, '');
+      this.notificationService.ErrorMessage(
+        FirebaseError.Parse(error.message), '');
     });
   }
 
@@ -166,7 +162,8 @@ export class RegisterComponent implements OnInit {
         `Verification email sent to ${this.email}`, '');
     })
     .catch(error => {
-      this.notificationService.ErrorMessage(error.message, '');
+      this.notificationService.ErrorMessage(
+        FirebaseError.Parse(error.message), '');
     });
   }
 
