@@ -40,8 +40,14 @@ import { AuthGuard, AccessGuard } from './guards';
 
 const routes: Routes = [
   // Auth routing
-  { path: 'auth/sign-in', component: LoginComponent },
-  { path: 'auth/register-user', component: RegisterComponent },
+  { path: 'auth', children: [
+      { path: 'sign-in', component: LoginComponent },
+      { path: 'register-user', component: RegisterComponent },
+      // reset password
+      // activation account
+    ]
+  },
+
   { path: 'not-found', component: NotFoundComponent },
   { path: 'redirecting', component: DefaultComponent },
 
