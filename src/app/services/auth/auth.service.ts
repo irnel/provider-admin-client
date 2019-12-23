@@ -48,6 +48,7 @@ export class AuthService {
   // Sign in with email/password
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(credential => {
+      console.log(credential.user);
       if (credential.user.emailVerified) {
         this.userService.getUserById(credential.user.uid).subscribe(user => {
           // update emailVerified and password
