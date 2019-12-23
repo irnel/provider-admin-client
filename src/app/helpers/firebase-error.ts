@@ -26,7 +26,7 @@ export class FirebaseError {
         break;
       case 'auth/user-not-found':
         message =
-          'We could not find user account associated with the email address or phone number.';
+          'We could not find user account associated with the email address.';
         break;
       case 'auth/phone-number-already-exists':
         message = 'The phone number is already in use by an existing user.';
