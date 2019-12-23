@@ -224,4 +224,10 @@ export class LoginComponent implements OnInit {
     const modal = this.render.selectRootElement(this.frameActivationAccount);
     modal.hide();
   }
+
+  registerUser() {
+    this.ngZone.run(() => {
+      this.router.navigate(['register-user']);
+    });
+  }
 }
