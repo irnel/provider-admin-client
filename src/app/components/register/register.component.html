@@ -19,20 +19,19 @@
 
       <!--Body-->
       <div class="modal-body">
-        <p>We have sent a confirmation email to <strong>{{email}}</strong>.</p>
+        <p>We have sent a confirmation email to <strong>{{ email }}</strong>.</p>
         <p>Please check your email and click on the link to verify your email address.</p>
+        <p><strong>Thanks.</strong></p>
       </div>
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <button mdbBtn [disabled]="sending" class="bg-success text-white" mdbWavesEffect
+        <button mdbBtn class="bg-success text-white" mdbWavesEffect
             (click)="sendVerificationMail()">
           <i class="fas fa-sync-alt left" aria-hidden="true"></i>Resend email verification
-          <i *ngIf="sending" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
         </button>
 
-        <button mdbBtn [disabled]="sending" class="bg-primary text-white" mdbWavesEffect
-            (click)="hideModal()">
+        <button mdbBtn class="bg-primary text-white" mdbWavesEffect (click)="hideModal()">
 
           <i class="fas fa-ban left" aria-hidden="true"></i>Close
         </button>

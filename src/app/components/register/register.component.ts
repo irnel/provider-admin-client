@@ -16,7 +16,6 @@ import { Roles, FirebaseError } from '../../helpers';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
-  sending = false;
   submitted = false;
   email: string;
   fullNameError: string;
@@ -35,24 +34,24 @@ export class RegisterComponent implements OnInit {
     private readonly notificationService: NotificationService
   ) {
     // redirect to specific dashboard if already logged in
-    this.authService.currentUser.subscribe(
-      currentUser => {
-        if (currentUser) {
-          currentUser.roles.forEach(rol => {
-            if (rol === Roles.Admin) {
-              // redirect to admin dashboard
-              this.router.navigate(['/admin-dashboard/workspace/home']);
-            } else if (rol === Roles.Provider) {
-              // redirect to provider dashboard
-              this.router.navigate(['/provider-dashboard/workspace/home']);
-            } else {
-              // redirect to cashier dashboard
-              this.router.navigate(['/cashier-dashboard/workspace/home']);
-            }
-          });
-        }
-      }
-    );
+    // this.authService.currentUser.subscribe(
+    //   currentUser => {
+    //     if (currentUser) {
+    //       currentUser.roles.forEach(rol => {
+    //         if (rol === Roles.Admin) {
+    //           // redirect to admin dashboard
+    //           this.router.navigate(['/admin-dashboard/workspace/home']);
+    //         } else if (rol === Roles.Provider) {
+    //           // redirect to provider dashboard
+    //           this.router.navigate(['/provider-dashboard/workspace/home']);
+    //         } else {
+    //           // redirect to cashier dashboard
+    //           this.router.navigate(['/cashier-dashboard/workspace/home']);
+    //         }
+    //       });
+    //     }
+    //   }
+    // );
   }
 
   ngOnInit() {
@@ -150,20 +149,20 @@ export class RegisterComponent implements OnInit {
     .catch(error => {
       this.loading = false;
       this.notificationService.ErrorMessage(
-        FirebaseError.Parse(error.message), '');
+        FirebaseError.Parse(error.code), '');
     });
   }
 
   sendVerificationMail() {
-    this.sending = false;
     this.authService.SendVerificationMail().then(() => {
-      this.sending = true;
+      this.hideModal();
+
       this.notificationService.SuccessMessage(
         `Verification email sent to ${this.email}`, '');
     })
     .catch(error => {
       this.notificationService.ErrorMessage(
-        FirebaseError.Parse(error.message), '');
+        FirebaseError.Parse(error.code), '');
     });
   }
 
