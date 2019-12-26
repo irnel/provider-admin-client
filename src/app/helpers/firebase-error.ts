@@ -21,7 +21,7 @@ export class FirebaseError {
       case 'auth/requires-recent-login':
         message = 'Please login again and try again!';
         break;
-      case 'auth/email-already-exists':
+      case 'auth/email-already-in-use':
         message = 'Email address is already in use by an existing user.';
         break;
       case 'auth/user-not-found':
