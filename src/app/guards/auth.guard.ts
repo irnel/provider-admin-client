@@ -20,13 +20,14 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
 
     const currentUser = this.authService.currentUserValue;
-    if (currentUser && currentUser.emailVerified) {
+    if (currentUser) {
       // logged in so return true
       return true;
     }
 
     // not logged in so redirect to login page with the return url
     this.router.navigate(['/auth/sign-in'], { queryParams: { returnUrl: state.url }});
+
     return false;
   }
 }

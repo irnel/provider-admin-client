@@ -30,6 +30,7 @@ export class AccessGuard implements CanActivate {
 
       // not valid role in so redirect to not found component
       this.router.navigate(['not-found']);
+
       return false;
   }
 }
