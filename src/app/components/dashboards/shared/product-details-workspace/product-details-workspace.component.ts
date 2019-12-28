@@ -37,15 +37,15 @@ export class ProductDetailsWorkspaceComponent implements OnInit {
     // Admin role
     if (this.userRole === Roles.Admin) {
       this.isAdmin = true;
-      this.userId = this.route.snapshot.params['userId'];
+      this.userId = this.route.snapshot.params.userId;
       this.userService.getUserById(this.userId).subscribe(
         user => this.user = user
       );
     }
 
-    this.providerId = this.route.snapshot.params['providerId'];
-    this.categoryId = this.route.snapshot.params['catId'];
-    const productId = this.route.snapshot.params['prodId'];
+    this.providerId = this.route.snapshot.params.providerId;
+    this.categoryId = this.route.snapshot.params.catId;
+    const productId = this.route.snapshot.params.prodId;
 
     this.observer$ = this.productService.getProductData(this.providerId, this.categoryId, productId);
     this.observer$.subscribe(
@@ -82,7 +82,7 @@ export class ProductDetailsWorkspaceComponent implements OnInit {
 
       // Provider role
       if (this.userRole === Roles.Provider) {
-        url = `provider-dashboard/workspace/providers`;
+        url = 'provider-dashboard/workspace/providers';
       }
 
       this.router.navigate([url]);
