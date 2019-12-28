@@ -10,6 +10,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {
   FooterComponent,
   LayoutComponent,
+  HeaderComponent,
   CircleProgressComponent,
   ProviderWorkspaceComponent,
   ProviderDetailsWorkspaceComponent,
@@ -33,6 +34,7 @@ import {
   declarations: [
     LayoutComponent,
     FooterComponent,
+    HeaderComponent,
     CircleProgressComponent,
     ProviderWorkspaceComponent,
     ProviderDetailsWorkspaceComponent,
