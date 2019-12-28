@@ -10,7 +10,7 @@
       <div class="modal-header d-flex justify-content-center">
         <h3 class="heading">Thank You for Registering</h3>
 
-        <button type="button" [disabled]="sending" class="close" data-dismiss="modal"
+        <button type="button" class="close" data-dismiss="modal"
             aria-label="Close" (click)="hideModal()">
 
           <span aria-hidden="true" class="white-text">×</span>
@@ -21,7 +21,6 @@
       <div class="modal-body">
         <p>We have sent a confirmation email to <strong>{{ email }}</strong>.</p>
         <p>Please check your email and click on the link to verify your email address.</p>
-        <p><strong>Thanks.</strong></p>
       </div>
 
       <!--Footer-->
