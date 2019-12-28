@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter, NgZone } from '@ang
 
 import { AuthService, NotificationService } from './../../../../services';
 import { User } from './../../../../models';
-
+import { FirebaseError } from '../../../../helpers/firebase-error';
 
 @Component({
   selector: 'app-header',
@@ -37,7 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     })
     .catch(error => {
-      this.notification.ErrorMessage(error.message, '');
+      this.notification.ErrorMessage(
+        FirebaseError.Parse(error.code), '');
     });
   }
 
