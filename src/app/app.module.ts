@@ -30,6 +30,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DefaultComponent } from './components/default/default.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { ConfirmEmailAddressComponent } from './components/confirm-email-address/confirm-email-address.component';
+import { ConfirmPasswordResetComponent } from './components/confirm-password-reset/confirm-password-reset.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { DefaultComponent } from './components/default/default.component';
     LoginComponent,
     RegisterComponent,
     NotFoundComponent,
-    DefaultComponent
+    DefaultComponent,
+    EmailConfirmationComponent,
+    ConfirmEmailAddressComponent,
+    ConfirmPasswordResetComponent
   ],
   imports: [
     BrowserModule,
