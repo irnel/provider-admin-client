@@ -1,5 +1,6 @@
 export * from './footer/footer.component';
 export * from './layout/layout.component';
+export * from './header/header.component';
 export * from './circle-progress/circle-progress.component';
 export * from './provider-workspace/provider-workspace.component';
 export * from './provider-details-workspace/provider-details-workspace.component';
