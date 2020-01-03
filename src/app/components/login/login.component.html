@@ -18,9 +18,9 @@
       </div>
 
       <!--Body-->
-      <div class="modal-body">
+      <div class="modal-body px-lg-5">
         <form [formGroup]="resetPasswordForm">
-          <p>Please enter your email address to request a password reset.</p>
+          <p>Enter your email address to request a password reset.</p>
           <!-- Email -->
           <div class="md-form form-sm mt-5 mb-5">
             <mdb-icon fas icon="envelope" class="text-primary prefix"></mdb-icon>
@@ -34,8 +34,8 @@
       </div>
 
       <!--Footer-->
-      <div class="modal-footer justify-content-center">
-        <button mdbBtn [disabled]="sending" class="btn-round-lg bg-success text-white" outline="true" mdbWavesEffect
+      <div class="modal-footer justify-content-center px-lg-5">
+        <button mdbBtn [disabled]="sending" class="btn-block btn-round-lg bg-success text-white" outline="true" mdbWavesEffect
             (click)="forgotPassword()">
 
           <i class="fas fa-sync-alt left" aria-hidden="true"></i>Send Email

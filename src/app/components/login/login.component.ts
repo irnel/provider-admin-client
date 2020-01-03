@@ -42,12 +42,22 @@ export class LoginComponent implements OnInit {
           currentUser.roles.forEach(rol => {
             if (rol === Roles.Admin) {
               // redirect to admin dashboard
-              this.router.navigate(['/admin-dashboard/workspace/home']);
+              this.ngZone.run(() => {
+                this.router.navigate(['/admin-dashboard/workspace/home']);
+              });
+
             } else if (rol === Roles.Provider) {
-              this.router.navigate(['/provider-dashboard/workspace/home']);
+              // redirect to cashier dashboard
+              this.ngZone.run(() => {
+                this.router.navigate(['/provider-dashboard/workspace/home']);
+              });
+
             } else {
               // redirect to cashier dashboard
-              this.router.navigate(['/cashier-dashboard/workspace/home']);
+              this.ngZone.run(() => {
+                this.router.navigate(['/cashier-dashboard/workspace/home']);
+              });
+
             }
           });
         }
@@ -121,11 +131,11 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.authService.SignIn(this.form.email.value, this.form.password.value)
-      .then(accountVerified => {
+      .then(emailVerified => {
         this.loading = false;
         this.clicked = false;
 
-        if (!accountVerified) {
+        if (!emailVerified) {
           this.showModalActivationAccount();
 
           return;
