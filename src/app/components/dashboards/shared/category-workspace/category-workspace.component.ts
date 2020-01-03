@@ -53,13 +53,13 @@ export class CategoryWorkspaceComponent implements OnInit {
     // Role Admin
     if (this.userRole === Roles.Admin) {
       this.isAdmin = true;
-      this.userId = this.route.snapshot.params['userId'];
+      this.userId = this.route.snapshot.params.userId;
       this.userService.getUserById(this.userId).subscribe(
         user => this.user = user
       );
     }
 
-    this.providerId = this.route.snapshot.params['providerId'];
+    this.providerId = this.route.snapshot.params.providerId;
     this.providerService.getProviderById(this.providerId).subscribe(
       provider => this.provider = provider
     );
