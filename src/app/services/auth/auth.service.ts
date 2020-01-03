@@ -8,7 +8,6 @@ import { User } from '../../models';
 import { NotificationService } from '../notification/notification.service';
 import { UserService } from '../user/user.service';
 import { Roles } from '../../helpers/enum-roles';
-import { FirebaseError } from '../../helpers/firebase-error';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +26,17 @@ export class AuthService {
      /* Saving user data in local storage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(firebaseUser => {
-      firebaseUser.reload();
-
       if (firebaseUser) {
+        // Refresh current user
+        firebaseUser.reload();
+
         // Save user data in Local Storage
         this.userService.getUserById(firebaseUser.uid).subscribe(
           user => {
             localStorage.setItem('user', JSON.stringify(user));
           }
         );
+
       } else {
         localStorage.setItem('user', null);
       }
@@ -48,11 +49,13 @@ export class AuthService {
   // Sign in with email/password
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(credential => {
-      console.log(credential.user);
+      credential.user.reload();
+
       if (credential.user.emailVerified) {
         this.userService.getUserById(credential.user.uid).subscribe(user => {
-          // update emailVerified and password
-          user.emailVerified = credential.user.emailVerified;
+
+          // Change emailVerified to true
+          user.emailVerified = true;
           this.SetUserData(user);
 
           this.currentUserSubject.next(user);
@@ -61,8 +64,8 @@ export class AuthService {
         return true;
 
       } else {
-        // email not verified
-        return false;
+        // email account is not verified
+         return false;
       }
     });
   }
@@ -95,8 +98,14 @@ export class AuthService {
 
   // Sign in with Google
   GoogleAuth() {
-    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+    // Config Google provider
+    const googleProvider = new auth.GoogleAuthProvider();
+    googleProvider.addScope('profile');
+    googleProvider.addScope('email');
+
+    return this.afAuth.auth.signInWithPopup(googleProvider)
       .then(credential => {
+
         const user: User = {
           displayName: credential.user.displayName,
           email: credential.user.email,

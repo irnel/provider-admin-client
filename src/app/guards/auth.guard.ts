@@ -20,7 +20,8 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
 
     const currentUser = this.authService.currentUserValue;
-    if (currentUser) {
+
+    if (currentUser && currentUser.emailVerified) {
       // logged in so return true
       return true;
     }
