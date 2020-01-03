@@ -8,7 +8,7 @@ export class FirebaseError {
         message = 'Invalid login credentials.';
         break;
       case 'auth/network-request-failed':
-        message = 'Please check your internet connection';
+        message = 'Please check your internet connection.';
         break;
       case 'auth/too-many-requests':
         message =
@@ -44,10 +44,10 @@ export class FirebaseError {
         message = 'The action code has expired';
         break;
       case 'auth/invalid-action-code':
-        message = 'The action code is invalid. This can happen if the code is malformed or has already been used';
+        message = 'The action code is invalid. This can happen if the code is malformed or has already been used.';
         break;
       case 'auth/user-disabled':
-        message = 'The user corresponding to the given action code has been disabled';
+        message = 'The user corresponding to the given action code has been disabled.';
         break;
 
       default:
