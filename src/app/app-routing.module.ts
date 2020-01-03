@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DefaultComponent } from './components/default/default.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { HomeProviderComponent } from './components/dashboards/provider/home-provider/home-provider.component';
 import { HomeAdminComponent } from './components/dashboards/admin/home-admin/home-admin.component';
 import { HomeCashierComponent } from './components/dashboards/cashier/home-cashier/home-cashier.component';
@@ -43,8 +44,7 @@ const routes: Routes = [
   { path: 'auth', children: [
       { path: 'sign-in', component: LoginComponent },
       { path: 'register-user', component: RegisterComponent },
-      // reset password
-      // activation account
+      { path: 'email/action', component: EmailConfirmationComponent },
     ]
   },
 
@@ -56,7 +56,7 @@ const routes: Routes = [
     path: 'admin-dashboard/workspace',
     component: HomeAdminComponent,
     canActivate: [AuthGuard, AccessGuard],
-    data: {role: 'admin'},
+    data: { role: 'admin' },
     children: [
       { path: 'home', component: HomeAdminWorkspaceComponent },
       { path: 'users', component: UsersWorkspaceComponent },
@@ -104,7 +104,7 @@ const routes: Routes = [
     path: 'provider-dashboard/workspace',
     component: HomeProviderComponent,
     canActivate: [AuthGuard, AccessGuard],
-    data: {role: 'provider'},
+    data: { role: 'provider' },
     children: [
       { path: 'home', component: HomeWorkspaceComponent },
       { path: 'providers', component: ProviderWorkspaceComponent },
@@ -176,7 +176,7 @@ const routes: Routes = [
     path: 'cashier-dashboard/workspace',
     component: HomeCashierComponent,
     canActivate: [AuthGuard, AccessGuard],
-    data: {role: 'cashier'},
+    data: { role: 'cashier' },
     children: [
       { path: 'home', component: HomeCashierWorkspaceComponent },
       {
