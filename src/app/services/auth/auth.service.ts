@@ -54,8 +54,7 @@ export class AuthService {
       if (credential.user.emailVerified) {
         this.userService.getUserById(credential.user.uid).subscribe(user => {
 
-          // Change emailVerified to true
-          user.emailVerified = true;
+          user.emailVerified = credential.user.emailVerified;
           this.SetUserData(user);
 
           this.currentUserSubject.next(user);
@@ -81,7 +80,6 @@ export class AuthService {
           displayName: data.displayName,
           email: data.email,
           phoneNumber: data.phoneNumber,
-          password: data.password,
           photoURL: credential.user.photoURL,
           publish: data.publish,
           emailVerified: credential.user.emailVerified,
