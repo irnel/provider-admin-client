@@ -37,11 +37,11 @@ import {
 
 import { HomeCashierWorkspaceComponent } from './components/dashboards/cashier/views';
 
-import { AuthGuard, AccessGuard } from './guards';
+import { AuthGuard, AccessGuard, SecureInnerPagesGuard } from './guards';
 
 const routes: Routes = [
   // Auth routing
-  { path: 'auth', children: [
+  { path: 'auth', canActivate: [SecureInnerPagesGuard], children: [
       { path: 'sign-in', component: LoginComponent },
       { path: 'register-user', component: RegisterComponent },
       { path: 'email/action', component: EmailConfirmationComponent },
