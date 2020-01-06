@@ -191,6 +191,8 @@ export class LoginComponent implements OnInit {
         `forgot password sent email to ${email}`, '', 2500);
     })
     .catch(error => {
+      this.sending = false;
+
       this.notification.ErrorMessage(
         FirebaseError.Parse(error.code), '', 2500);
     });
@@ -206,6 +208,8 @@ export class LoginComponent implements OnInit {
         `Verification email sent to ${this.form.email.value}`, '');
     })
     .catch(error => {
+      this.sending = false;
+      
       this.notification.ErrorMessage(
         FirebaseError.Parse(error.code), '', 2500);
     });

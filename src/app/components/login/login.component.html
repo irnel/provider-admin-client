@@ -24,9 +24,10 @@
           <!-- Email -->
           <div class="md-form form-sm mt-5 mb-5">
             <mdb-icon fas icon="envelope" class="text-primary prefix"></mdb-icon>
-            <input mdbInput type="email" class="form-control"
-              id="formResetEmail" data-error="invalid email"
-              data-success="valid email" formControlName="resetEmail">
+            <input mdbInputDirective type="email" class="form-control"
+              id="formResetEmail" formControlName="resetEmail"
+              [validateSuccess]="false"
+              [errorMessage]="resetEmailError">
 
             <label for="formResetEmail">Email</label>
           </div>
@@ -34,11 +35,11 @@
       </div>
 
       <!--Footer-->
-      <div class="modal-footer justify-content-center px-lg-5">
+      <div class="modal-footer justify-content-center px-lg-5 bg-white">
         <button mdbBtn [disabled]="sending" class="btn-block btn-round-lg bg-success text-white" outline="true" mdbWavesEffect
             (click)="forgotPassword()">
 
-          <i class="fas fa-sync-alt left" aria-hidden="true"></i>Send Email
+          <i class="fas share-square left" aria-hidden="true"></i>Send Email
           <i *ngIf="sending" class="fas fa-spinner fa-pulse fa-lg ml-2" aria-hidden="true"></i>
         </button>
       </div>
