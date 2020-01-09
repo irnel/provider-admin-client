@@ -49,6 +49,7 @@ export class AuthService {
   // Sign in with email/password
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password).then(credential => {
+      // update user password and emailVerified
       credential.user.reload();
 
       if (credential.user.emailVerified) {
@@ -94,14 +95,9 @@ export class AuthService {
       });
   }
 
-  // Sign in with Google
-  GoogleAuth() {
-    // Config Google provider
-    const googleProvider = new auth.GoogleAuthProvider();
-    googleProvider.addScope('profile');
-    googleProvider.addScope('email');
-
-    return this.afAuth.auth.signInWithPopup(googleProvider)
+  // Auth logic to run auth providers
+  AuthLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
       .then(credential => {
 
         const user: User = {
@@ -111,7 +107,7 @@ export class AuthService {
           photoURL: credential.user.photoURL,
           publish: false,
           roles: [Roles.Provider],
-          emailVerified: credential.user.emailVerified,
+          emailVerified: true,
           refreshToken: credential.user.refreshToken,
           parentId: null,
           uid: credential.user.uid
@@ -120,6 +116,15 @@ export class AuthService {
         this.SetUserData(user);
         this.currentUserSubject.next(user);
       });
+  }
+
+  // Sign in with Google
+  GoogleAuth() {
+    const provider = new auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+
+    return this.AuthLogin(new auth.GoogleAuthProvider());
   }
 
   // Send email verification when new user sign up
